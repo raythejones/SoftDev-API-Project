@@ -22,6 +22,27 @@ c = db.cursor()    #facilitate db ops
 
 #==========================================================
 
+@my_app.route('/')
+def root():
+    
+@my_app.route('/home')
+def home():
+    
+@my_app.route('/edit')
+def edit():
+    
+@my_app.route('/friends')
+def friends():
+    
+@my_app.route('/profile')
+def profile():
+    
+@my_app.route('/add')
+def add():
+    
+@my_app.route('/product')
+def product():
+    
 
     
 if __name__ == '__main__':
