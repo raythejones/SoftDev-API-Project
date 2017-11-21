@@ -130,7 +130,12 @@ def add():
 @my_app.route('/product')
 def product():
     
-
+#logout: removes session and redirects to root route
+@my_app.route('/logout', methods=["POST", "GET"])
+def logout():
+    if "user" in session:
+        session.pop("user")
+    return redirect( url_for("root") )
     
 if __name__ == '__main__':
     my_app.debug = True
