@@ -11,6 +11,7 @@ c = db.cursor()    #facilitate db ops
 
 c.execute("CREATE TABLE users (user TEXT PRIMARY KEY, pass TEXT, name TEXT, age INT, gender TEXT, hobbies TEXT);")
 c.execute("CREATE TABLE friends (user TEXT PRIMARY KEY, friend TEXT PRIMARY KEY);")
+c.execute("CREATE TABLE requests (user TEXT PRIMARY KEY, request TEXT PRIMARY KEY);")
 c.execute("CREATE TABLE stories (user INT PRIMARY KEY, name TEXT, id TEXT);")
 
 #==========================================================

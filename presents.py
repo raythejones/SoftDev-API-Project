@@ -24,6 +24,7 @@ c = db.cursor()    #facilitate db ops
 
 #helper methods for login, logout, and create_user
 
+
 def login(username, password):
     user = db_tool.get_user_by_username(username)
     if user:

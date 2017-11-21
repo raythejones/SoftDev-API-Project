@@ -1,3 +1,4 @@
 1. Added in /logout route
 2. Assign Roles: Basic setup to Jackie
 3. Renamed Home Route/HTML file to Index
+4. Added one more table for friend requests
