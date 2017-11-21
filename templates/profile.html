@@ -5,5 +5,24 @@
 </head>
 <body>
 	
+	<div class="top-bar">
+	    <div class="top-bar-section">
+	    	<ul class="dropdown menu" data-dropdown-menu>
+	    		<li>
+					<a href="{{ url_for('friends') }}">Find Friends</a>
+					<ul class="menu">
+						<li>Friend Requests To Be Added Here</li>
+					</ul>
+				</li>
+				<li><a href="{{ url_for('profile') }}">My List</a></li>
+				<li><a href="{{ url_for('index') }}">Home</a></li>
+			</ul>
+		</div>
+	    <div class="top-bar-right">
+			<li><a href="{{ url_for('edit') }}">Hi, Username!</a></li>
+			<li><a href="{{ url_for('logout') }}">Log Out</a></li>
+		</div>
+	</div>
+	
 </body>
 </html>

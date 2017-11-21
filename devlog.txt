@@ -1,3 +1,6 @@
 xuJ — 2017-11-17-17 14:04
 	setup the repo with folders and files needed
 	setup the main setup python code for db and routing
+
+xuJ - 2017-11-21-17 14:44
+	wrote code for standard header
