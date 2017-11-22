@@ -9,3 +9,5 @@ jonesR — 2017-11-21-17 14:42
 xuJ - 2017-11-21-17 14:44
 	wrote code for standard header
 
+xuJ - 2017-11-22-17 14:44
+	added in data structures for user information to be displayed in the header
