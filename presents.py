@@ -124,8 +124,15 @@ def friends():
 @my_app.route('/profile')
 def profile():
     
-@my_app.route('/add')
+@my_app.route('/add', methods =['GET','POST'])
 def add():
+    if request.args.get('search') == 'Submit':
+        items =searchWalmart(requests.args.get('lookup'))
+        return render_template('addwish.html',stuff=items)
+    else:
+        flash('Please search something')
+        return render_template('addwish.html')
+    
     
 @my_app.route('/product')
 def product():
