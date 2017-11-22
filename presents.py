@@ -19,6 +19,9 @@ f = "presents.db"
 db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
 
+username = "";
+friends = [];
+requests = {}; #dictionary in the form (username: name, age, gender, hobbies)
 
 #==========================================================
 
@@ -29,6 +32,7 @@ def login(username, password):
     if user:
         if check_password(user['id'], password):
             session['user_id'] = user['id']
+            username = user['id']
             return 0
         return 1
     return 2
@@ -58,8 +62,8 @@ def create(username, password1, password2):
             return 0
         return 1
     return 2
-
-@my_app.route('/login', methods=['POST', 'GET'])
+     
+@my_app.route('/', methods=['POST', 'GET'])
 def login():
     if logged_in():
         flash('User is already logged in.')
@@ -108,27 +112,30 @@ def create_user():
             return redirect(url_for('create_user'))
     else:
         return render_template('create_user.html', title = 'Create')
-
-@my_app.route('/')
-def root():
     
-@my_app.route('/home')
+@my_app.route('/index')
 def home():
+    return render_template('index.html', user = username, fr = requests)
     
 @my_app.route('/edit')
 def edit():
+    return render_template('edit.html', user = username, fr = requests)
     
 @my_app.route('/friends')
 def friends():
+    return render_template('findfriends.html', user = username, fr = requests)
     
 @my_app.route('/profile')
 def profile():
+    return render_template('profile.html', user = username, fr = requests)
     
 @my_app.route('/add')
 def add():
+    return render_template('addwish.html', user = username, fr = requests)
     
 @my_app.route('/product')
 def product():
+    return render_template('product.html', user = username, fr = requests)
     
 if __name__ == '__main__':
     my_app.debug = True
