@@ -123,8 +123,22 @@ def home():
     
 @my_app.route('/edit')
 def edit():
-    my_data = c.execute("SELECT user FROM users WHERE user = %s"%(my_username))
-    return render_template('edit.html', data = my_data, fr = requests)
+    if request.method == 'POST':
+        if request.form['password']==request.form['confirm']:
+            name = request.form['name']
+            my_username = request.form['username']
+            pw = request.form['password']
+            age = request.form['age']
+            gender = request.form['gender']
+            hobbies = request.form['hobbies']
+            c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");"%(my_username, pw, name, age, gender, hobbies))
+            return redirect(url_for('edit'))
+        else:
+            flash('Passwords do not match.')
+            return redirect(url_for('edit'))
+    else:
+        my_data = c.execute("SELECT user FROM users WHERE user = %s"%(my_username))
+        return render_template('edit.html', data = my_data, fr = requests)
     
 @my_app.route('/friends')
 def friends():
