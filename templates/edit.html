@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='foundation.css')}}">
+	<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='app.css')}}">
+	<title>Update Profile</title>
 </head>
 <body>
 	
@@ -45,7 +47,7 @@
 				Gender: <br>
 				<input name="gender" type="text" value ="{{data[4]}}"> <br><br>
 				Hobbies/Interests: <br>
-				<textarea name=name>
+				<textarea name="hobbies">
 				{{data[5]}}
 				</textarea>
 				<input type="submit" value="Submit"> <br><br>

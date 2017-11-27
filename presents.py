@@ -21,8 +21,8 @@ c = db.cursor()    #facilitate db ops
 
 my_data = [];
 my_username = "";
-friends = [];
-requests = {}; #dictionary in the form (username: name, age, gender, hobbies)
+friends = {}; #dictionary in the form (username: [name, [wishes]])
+requests = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 #==========================================================
 
@@ -119,7 +119,7 @@ def create_user():
     
 @my_app.route('/index')
 def home():
-    return render_template('index.html', user = my_username, fr = requests)
+    return render_template('index.html', user=my_username, fr=requests, frands=friends)
     
 @my_app.route('/edit')
 def edit():
@@ -138,28 +138,31 @@ def edit():
             return redirect(url_for('edit'))
     else:
         my_data = c.execute("SELECT user FROM users WHERE user = %s"%(my_username))
-        return render_template('edit.html', data = my_data, fr = requests)
+        return render_template('edit.html', data=my_data, fr=requests)
     
 @my_app.route('/friends')
 def friends():
-    return render_template('findfriends.html', user = my_username, fr = requests)
+    return render_template('findfriends.html', user=my_username, fr=requests)
     
 @my_app.route('/profile')
 def profile():
-    return render_template('profile.html', user = my_username, fr = requests)
+    if request.method == "POST":
+        person = request.forn['person']
+    else:
+        return render_template('profile.html', user=my_username, fr=requests)
     
 @my_app.route('/add', methods =['GET','POST'])
 def add():
     if request.args.get('search') == 'Submit':
         items =searchWalmart(requests.args.get('lookup'))
-        return render_template('addwish.html', stuff = items, user = my_username, fr = requests)
+        return render_template('addwish.html', stuff=items, user=my_username, fr=requests)
     else:
         flash('Please search something')
-        return render_template('addwish.html', user = my_username, fr = requests)
+        return render_template('addwish.html', user=my_username, fr=requests)
     
 @my_app.route('/product')
 def product():
-    return render_template('product.html', user = my_username, fr = requests)
+    return render_template('product.html', user=my_username, fr=requests)
     
 if __name__ == '__main__':
     my_app.debug = True
