@@ -18,6 +18,9 @@ xuJ - 2017-11-22-17 14:44
 korsunM - 2017-11-25-18:29
 	Created a method to return a link to a youtube video
 
-xuJ - 2017-11-27-17 12:06
+xuJ - 2017-11-27-17 14:06
 	created my_data data structure for all of user data and implemented into edit.html
 	initialized data structures from /login and /create_user routes
+
+xuJ - 2017-11-27-17 14:18
+	added in everything to the /edit route 
