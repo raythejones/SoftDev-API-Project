@@ -1,0 +1,16 @@
+body {
+    background-color: darkgrey;
+    color: white;
+}
+table{
+    float:left;
+    width:40%;
+}
+form{
+    float:right;
+    width:40%;
+}
+
+    
+    
+			  
