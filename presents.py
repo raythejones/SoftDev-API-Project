@@ -103,10 +103,10 @@ def create_user():
                              request.form['password2'])
         if result == 0:
             name = request.form['name']
-            user = request.form['username']
+            my_username = request.form['username']
             pw = request.form['password1']
             flash('Account Created')
-            c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(user, pw, name))
+            c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(my_username, pw, name))
             return redirect(url_for('edit'))
         elif result == 1:
             flash('Passwords do not match.')
@@ -123,8 +123,8 @@ def home():
     
 @my_app.route('/edit')
 def edit():
-    my_data
-    return render_template('edit.html', user = my_username, fr = requests)
+    my_data = c.execute("SELECT user FROM users WHERE user = %s"%(my_username))
+    return render_template('edit.html', data = my_data, fr = requests)
     
 @my_app.route('/friends')
 def friends():
