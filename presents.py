@@ -147,7 +147,7 @@ def friends():
 @my_app.route('/profile')
 def profile():
     if request.method == "POST":
-        person = request.forn['person']
+        person = request.form['person']
     else:
         return render_template('profile.html', user=my_username, fr=requests)
     
