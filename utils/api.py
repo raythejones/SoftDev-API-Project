@@ -21,6 +21,14 @@ def showYoutube(query):
      dict=r.json()
      items=dict['items']
      video=items[0]['videoId']
-     link='https://www.youtube.com/watch?v='+video
-     return link
+     links=[]
+     link='https://www.youtube.com/watch?v='+video+'review'
+     links.append(link)
+     video=items[1]['videoId']
+     link='https://www.youtube.com/watch?v='+video+'review'
+     links.append(link)
+     video=items[2]['videoId']
+     link='https://www.youtube.com/watch?v='+video+'review'
+     links.append(link)
+     return links
      
