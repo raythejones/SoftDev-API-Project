@@ -21,10 +21,36 @@
 			</ul>
 		</div>
 	    <div class="top-bar-right">
-			<li><a href="{{ url_for('edit') }}">Hi, {{user}}!</a></li>
+			<li><a href="{{ url_for('edit') }}">Hi, {{data[0]}}!</a></li>
 			<li><a href="{{ url_for('logout') }}">Log Out</a></li>
 		</div>
 	</div>
 	
+	<div>
+		<h2>Update Profile </h2>
+		<form>
+			<div>
+				Name: <br>
+				{{data[2]}} <br><br>
+				Username: <br>
+				{{data[0]}} <br><br>
+				Change Password: <br>
+				<input name="password" type="text"> <br><br>
+				Confirm Password: <br>
+				<input name="confirm" type="text"> <br><br>
+			</div>
+			<div>
+				Age: <br>
+				<input name="age" type="text" value ="{{data[3]}}"> <br><br>
+				Gender: <br>
+				<input name="gender" type="text" value ="{{data[4]}}"> <br><br>
+				Hobbies/Interests: <br>
+				<textarea name=name>
+				{{data[5]}}
+				</textarea>
+				<input type="submit" value="Submit"> <br><br>
+			</div>
+		</form>
+	</div>
 </body>
 </html>

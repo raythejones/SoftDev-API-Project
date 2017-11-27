@@ -1,10 +1,3 @@
-﻿korsunM - 2017-11-25-18:29
-	Created a method to return a link to a youtube video
-
-korsunM - 2017-11-21-14:33
-	Created some api functionality with lookups
-
-
 xuJ — 2017-11-17-17 14:04
 	setup the repo with folders and files needed
 	setup the main setup python code for db and routing
@@ -13,8 +6,18 @@ jonesR — 2017-11-21-17 14:42
 	finished python for login, logout, and create_user
 	finished html for login page, but not yet connected to standard header page
 
+korsunM - 2017-11-21-14:33
+	Created some api functionality with lookups
+
 xuJ - 2017-11-21-17 14:44
 	wrote code for standard header
 
 xuJ - 2017-11-22-17 14:44
 	added in data structures for user information to be displayed in the header
+
+korsunM - 2017-11-25-18:29
+	Created a method to return a link to a youtube video
+
+xuJ - 2017-11-27-17 12:06
+	created my_data data structure for all of user data and implemented into edit.html
+	initialized data structures from /login and /create_user routes
