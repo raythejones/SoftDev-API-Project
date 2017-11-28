@@ -196,15 +196,23 @@ def profile():
 def add():
  #   initialize_fnfr()
     if request.args.get('search') == 'Submit':
-        items =searchWalmart(requests.args.get('lookup'))
+        items =searchWalmart(request.args.get('lookup'))
         return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
     else:
         flash('Please search something')
         return render_template('addwish.html', data=my_data, fr=requests)
     
-@my_app.route('/product')
+@my_app.route('/product', methods=['GET','POST'])
 def product():
  #   initialize_fnfr()
+    if request.method == 'GET':
+        name=request.args.get('name')
+        info={}
+        info=searchWalmart(name)[0]
+        info=productInfo(info)
+        vids=searchYoutube(name)
+        return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=youtubevids, user=my_username, fr=requests)
+ 
     return render_template('product.html', data=my_data, fr=requests)
     
 if __name__ == '__main__':
