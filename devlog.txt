@@ -1,4 +1,4 @@
-xuJ — 2017-11-17-17 14:04
+﻿xuJ — 2017-11-17-17 14:04
 	setup the repo with folders and files needed
 	setup the main setup python code for db and routing
 
@@ -25,3 +25,8 @@ xuJ - 2017-11-27-17 14:06
 xuJ - 2017-11-27-17 14:42
 	added in everything to the /edit route 
 	finished with index.html
+
+korsunM - 2017-11-28-0:42
+	finished api implementation, however it is imperfect.
+	HTML needs to be frameworkified
+	API based code needs testings

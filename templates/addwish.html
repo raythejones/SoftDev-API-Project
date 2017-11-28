@@ -1,3 +1,23 @@
 {% extends "base.html" %}
 
 {% block body %}
+<form>
+  <input type="text" name="lookup" >
+  <input type="submit" value="Submit">
+</form>
+
+<table>
+  <tr>
+    <th> {{query}} </th>
+  </tr>
+  {% for each in stuff %}
+  <tr>
+    <td> <a href="/product?name={{each['name']}}" >{{each['name']}}</a></td>
+  </tr>
+  
+  {% endfor %}
+</table>
+
+{% endblock %}
+
+  

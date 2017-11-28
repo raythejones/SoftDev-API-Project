@@ -154,14 +154,25 @@ def profile():
 @my_app.route('/add', methods =['GET','POST'])
 def add():
     if request.args.get('search') == 'Submit':
-        items =searchWalmart(requests.args.get('lookup'))
+        items =searchWalmart(request.args.get('lookup'))
+        sessions['lookup'] = items
         return render_template('addwish.html', stuff=items, user=my_username, fr=requests)
     else:
         flash('Please search something')
         return render_template('addwish.html', user=my_username, fr=requests)
     
-@my_app.route('/product')
+@my_app.route('/product', methods=['GET','POST'])
 def product():
+    if request.method == 'GET':
+        name= request.args.get('name')
+        info={}
+        for each in session['lookup']:
+            if each['name'] == name:
+                info = each
+        info=productInfo(info)    
+        youtubevids= searchYoutube(name)
+        return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=youtubevids, user=my_username, fr=requests)
+            
     return render_template('product.html', user=my_username, fr=requests)
     
 if __name__ == '__main__':
