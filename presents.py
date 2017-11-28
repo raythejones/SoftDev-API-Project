@@ -116,11 +116,11 @@ def create_user():
             return redirect(url_for('create_user'))
     else:
         return render_template('create_user.html', title = 'Create')
-    
+
 @my_app.route('/index')
-def home():
+def index():
     return render_template('index.html', user=my_username, fr=requests, frands=friends)
-    
+
 @my_app.route('/edit')
 def edit():
     if request.method == 'POST':
@@ -163,7 +163,7 @@ def add():
 @my_app.route('/product')
 def product():
     return render_template('product.html', user=my_username, fr=requests)
-    
+
 if __name__ == '__main__':
     my_app.debug = True
     my_app.run()
