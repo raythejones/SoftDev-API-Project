@@ -1,3 +1,23 @@
 {% extends "base.html" %}
 
 {% block body %}
+<h1> <a href="{{link}}"> {{productName}}</a> </h1>
+
+<table>
+  <tr>
+    <td> {{desc}} </td>
+  </tr>
+  <tr>
+    <td><img src="{{image}}" > </td>
+  </tr>
+</table>
+
+<table>
+  {% for each in vids %}
+  <td> <iframe width="420" height="315" src="{{each}}">
+  </iframe> </td>
+  {% endfor %}
+</table>
+
+
+{% endblock %}

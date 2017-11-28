@@ -137,12 +137,18 @@ def create_user():
             return redirect(url_for('create_user'))
     else:
         return render_template('create_user.html', title = 'Create')
-    
+
 @my_app.route('/index')
+<<<<<<< HEAD
 def home():
     initialize_fnfr()
     return render_template('index.html', data=my_data, fr=requests, frands=friends)
     
+=======
+def index():
+    return render_template('index.html', user=my_username, fr=requests, frands=friends)
+
+>>>>>>> 1ade2c6f47d81b4f9711daf21989f02b5ab310d3
 @my_app.route('/edit')
 def edit():
     initialize_fnfr()
@@ -180,17 +186,38 @@ def profile():
 def add():
     initialize_fnfr()
     if request.args.get('search') == 'Submit':
+<<<<<<< HEAD
         items =searchWalmart(requests.args.get('lookup'))
         return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
+=======
+        items =searchWalmart(request.args.get('lookup'))
+        sessions['lookup'] = items
+        return render_template('addwish.html', stuff=items, user=my_username, fr=requests)
+>>>>>>> 1ade2c6f47d81b4f9711daf21989f02b5ab310d3
     else:
         flash('Please search something')
         return render_template('addwish.html', data=my_data, fr=requests)
     
-@my_app.route('/product')
+@my_app.route('/product', methods=['GET','POST'])
 def product():
+<<<<<<< HEAD
     initialize_fnfr()
     return render_template('product.html', data=my_data, fr=requests)
     
+=======
+    if request.method == 'GET':
+        name= request.args.get('name')
+        info={}
+        for each in session['lookup']:
+            if each['name'] == name:
+                info = each
+        info=productInfo(info)    
+        youtubevids= searchYoutube(name)
+        return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=youtubevids, user=my_username, fr=requests)
+            
+    return render_template('product.html', user=my_username, fr=requests)
+
+>>>>>>> 1ade2c6f47d81b4f9711daf21989f02b5ab310d3
 if __name__ == '__main__':
     my_app.debug = True
     my_app.run()
