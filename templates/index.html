@@ -4,6 +4,9 @@
 
 	<div>
 		<h2>My Friends</h2>
+		{% if frands %}
+		    <p>No friends right now. Go make some!</p>
+		{% else %}
 		<table>
 			{% for each in frands %}
 				<tr>
@@ -22,5 +25,6 @@
 				</tr>
 			{% endfor %}
 		</table>
+		{% endif %}
 	</div>
 {% endblock %}

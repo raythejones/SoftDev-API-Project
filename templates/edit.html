@@ -22,7 +22,11 @@
 				<input name="gender" type="text" value ="{{data[4]}}"> <br><br>
 				Hobbies/Interests <br>
 				<textarea name="hobbies">
-				{{data[5]}}
+				{% data[5] %}
+				    {{data[5]}}
+				{% else %}
+				    separate interests with commas
+				{% endif %}
 				</textarea>
 				<input type="submit" value="Submit"> <br><br>
 			</div>
