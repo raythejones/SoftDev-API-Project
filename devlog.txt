@@ -42,6 +42,11 @@ parkP - 2017-11-28 04:12
 	completed profile.html except for product section
 	finished the profileroute in presents.py but couldn't test it
 
+korsunM - 2017-11-28 14:30
+	Re-added code to add() and product()
+	Removed usage of sessions for products to work with wishlist
+
 xuJ - 2017-11-28 14:39
 	added in sample data in db.py
+
 
