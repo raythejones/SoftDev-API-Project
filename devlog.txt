@@ -34,6 +34,13 @@ korsunM - 2017-11-28 0:42
 xuJ - 2017-11-28 00:56
 	finished with data structures for friends and requests for every route
 	added in conditionals for index.html and edit.html
+	
+parkP - 2017-11-28 4:12
+	added more to initialize_fnfr() method in presents.py
+	finished with findfriends.html
+	finished the friends route in presents.py but couldn't test it
+	completed profile.html except for product section
+	finished the profileroute in presents.py but couldn't test it
 
 
 
