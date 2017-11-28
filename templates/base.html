@@ -24,12 +24,12 @@
 			</ul>
 		</div>
 	    <div class="top-bar-right">
-			<li><a href="{{ url_for('edit') }}">HI NAME!</a></li>
+			<li><a href="{{ url_for('edit') }}">HI {{data[0]}}</a></li>
 			<li><a href="{{ url_for('logout') }}">Log Out</a></li>
 		</div>
 	</div>
 	
-				    {% block body %}
+	{% block body %}
 
     {% endblock %}
 

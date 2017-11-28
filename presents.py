@@ -19,9 +19,9 @@ f = "presents.db"
 db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise create
 c = db.cursor()    #facilitate db ops
 
-my_data = [];
+my_data = []; #array in the form [user, pass, name, age, gender, hobbies]
 my_username = "";
-friends = {}; #dictionary in the form (username: [name, [wishes]])
+friends = {}; #dictionary in the form (username: [name, age, gender, hobbies, [wishes]])
 requests = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 #==========================================================
@@ -46,6 +46,10 @@ def logged_in():
 
 def logout():
     if logged_in():
+        friends = {}
+        requests = {}
+        my_username = ""
+        my_data = []
         session.pop('user_id')
 
 def check_password(user_id, password_to_check):
@@ -63,7 +67,24 @@ def create(username, password1, password2):
             return 0
         return 1
     return 2
-     
+    
+def initialize_fnfr():
+    people = c.execute("SELECT friend FROM friends WHERE user = %s"%(my_username))
+    for each in people:
+        friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user = %s"%(each[0]))
+        friend_wishes = []
+        temp = c.execute("SELECT id FROM products WHERE user = %s"%(each[0]))
+        for wish in temp:
+            friend_wishes.append(wish[0])
+        friend_data.append(friend_wishes)
+        friends[each[0]] = friend_data
+    
+    reqs = c.execute("SELECT request FROM requests WHERE user = %s"%(my_username))
+    for each in reqs:
+        req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user = %s"%(each[0]))
+        requests[each[0]] = req_data
+    
+    
 @my_app.route('/', methods=['POST', 'GET'])
 def login():
     if logged_in():
@@ -119,10 +140,12 @@ def create_user():
     
 @my_app.route('/index')
 def home():
-    return render_template('index.html', user=my_username, fr=requests, frands=friends)
+    initialize_fnfr()
+    return render_template('index.html', data=my_data, fr=requests, frands=friends)
     
 @my_app.route('/edit')
 def edit():
+    initialize_fnfr()
     if request.method == 'POST':
         if request.form['password']==request.form['confirm']:
             name = request.form['name']
@@ -142,27 +165,31 @@ def edit():
     
 @my_app.route('/friends')
 def friends():
-    return render_template('findfriends.html', user=my_username, fr=requests)
+    initialize_fnfr()
+    return render_template('findfriends.html', data=my_data, fr=requests)
     
 @my_app.route('/profile')
 def profile():
+    initialize_fnfr()
     if request.method == "POST":
         person = request.form['person']
     else:
-        return render_template('profile.html', user=my_username, fr=requests)
+        return render_template('profile.html', data=my_data, fr=requests)
     
 @my_app.route('/add', methods =['GET','POST'])
 def add():
+    initialize_fnfr()
     if request.args.get('search') == 'Submit':
         items =searchWalmart(requests.args.get('lookup'))
-        return render_template('addwish.html', stuff=items, user=my_username, fr=requests)
+        return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
     else:
         flash('Please search something')
-        return render_template('addwish.html', user=my_username, fr=requests)
+        return render_template('addwish.html', data=my_data, fr=requests)
     
 @my_app.route('/product')
 def product():
-    return render_template('product.html', user=my_username, fr=requests)
+    initialize_fnfr()
+    return render_template('product.html', data=my_data, fr=requests)
     
 if __name__ == '__main__':
     my_app.debug = True
