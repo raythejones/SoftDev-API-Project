@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 xuJ — 2017-11-17 14:04
-=======
-﻿xuJ — 2017-11-17-17 14:04
->>>>>>> 1ade2c6f47d81b4f9711daf21989f02b5ab310d3
 	setup the repo with folders and files needed
 	setup the main setup python code for db and routing
 
