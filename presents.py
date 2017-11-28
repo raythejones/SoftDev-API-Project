@@ -9,7 +9,8 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 import sqlite3, hashlib
 import os
 #from utils import db
-
+import auth
+from auth import logged_in
 
 my_app = Flask (__name__)
 my_app.secret_key = os.urandom(100)
@@ -28,46 +29,6 @@ requests = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 #helper methods for login, logout, and create_user
 
-def login(username, password):
-    user = db_tool.get_user_by_username(username)
-    if user:
-        if check_password(user['id'], password):
-            session['user_id'] = user['id']
-            my_username = user['id']
-            return 0
-        return 1
-    return 2
-
-def logged_in():
-    try:
-        return session['user_id'] is not None
-    except KeyError:
-        return False
-
-def logout():
-    if logged_in():
-        friends = {}
-        requests = {}
-        my_username = ""
-        my_data = []
-        session.pop('user_id')
-
-def check_password(user_id, password_to_check):
-    return db_tool.get_password(user_id) == hashlib.sha224(password_to_check).hexdigest()
-
-def set_password(user_id, new_password):
-    db_tool.set_password(user_id, hashlib.sha224(new_password).hexdigest())
-
-def create(username, password1, password2):
-    if not username in db_tool.get_users():
-        if password1 == password2:
-            user_id = db_tool.add_user(username)
-            set_password(user_id, password1)
-            login(username, password1)
-            return 0
-        return 1
-    return 2
-    
 def initialize_fnfr():
     people = c.execute("SELECT friend FROM friends WHERE user = %s"%(my_username))
     for each in people:
@@ -84,8 +45,16 @@ def initialize_fnfr():
         req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user = %s"%(each[0]))
         requests[each[0]] = req_data
     
-    
-@my_app.route('/', methods=['POST', 'GET'])
+      
+@my_app.route('/')
+def index():
+#    initialize_fnfr()
+	if logged_in():
+		return render_template('index.html', data=my_data, fr=requests, frands=friends)
+	else:
+		return redirect(url_for('login'))	
+    	
+@my_app.route('/login', methods=['POST', 'GET'])
 def login():
     if logged_in():
         flash('User is already logged in.')
@@ -137,15 +106,11 @@ def create_user():
             return redirect(url_for('create_user'))
     else:
         return render_template('create_user.html', title = 'Create')
-    
-@my_app.route('/index')
-def home():
-    initialize_fnfr()
-    return render_template('index.html', data=my_data, fr=requests, frands=friends)
-    
+
+
 @my_app.route('/edit')
 def edit():
-    initialize_fnfr()
+#    initialize_fnfr()
     if request.method == 'POST':
         if request.form['password']==request.form['confirm']:
             name = request.form['name']
@@ -165,12 +130,12 @@ def edit():
     
 @my_app.route('/friends')
 def friends():
-    initialize_fnfr()
+ #   initialize_fnfr()
     return render_template('findfriends.html', data=my_data, fr=requests)
     
 @my_app.route('/profile')
 def profile():
-    initialize_fnfr()
+ #   initialize_fnfr()
     if request.method == "POST":
         person = request.form['person']
     else:
@@ -178,7 +143,7 @@ def profile():
     
 @my_app.route('/add', methods =['GET','POST'])
 def add():
-    initialize_fnfr()
+ #   initialize_fnfr()
     if request.args.get('search') == 'Submit':
         items =searchWalmart(requests.args.get('lookup'))
         return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
@@ -188,7 +153,7 @@ def add():
     
 @my_app.route('/product')
 def product():
-    initialize_fnfr()
+ #   initialize_fnfr()
     return render_template('product.html', data=my_data, fr=requests)
     
 if __name__ == '__main__':
