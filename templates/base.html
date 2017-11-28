@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>{% block title %} {% endblock %}</title>
+	<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='foundation.css')}}">
+	<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='app.css')}}">
+	<title>{% block title %} {% endblock %}</title>
 </head>
 <body>
+
 	
 	<div class="top-bar">
 	    <div class="top-bar-section">
@@ -11,7 +14,9 @@
 	    		<li>
 					<a href="{{ url_for('friends') }}">Find Friends</a>
 					<ul class="menu">
-						<li>Friend Requests To Be Added Here</li>
+						{% for each in fr %}
+							<li>{{fr[each][0]}}({{each}})</li>
+						{% endfor %}
 					</ul>
 				</li>
 				<li><a href="{{ url_for('profile') }}">My List</a></li>
@@ -19,11 +24,14 @@
 			</ul>
 		</div>
 	    <div class="top-bar-right">
-			<li><a href="{{ url_for('edit') }}">Hi, Username!</a></li>
+			<li><a href="{{ url_for('edit') }}">HI NAME!</a></li>
 			<li><a href="{{ url_for('logout') }}">Log Out</a></li>
 		</div>
 	</div>
-	    {% block body %}
+	
+				    {% block body %}
+
     {% endblock %}
+
 </body>
 </html>
