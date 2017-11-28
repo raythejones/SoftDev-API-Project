@@ -26,7 +26,7 @@ xuJ - 2017-11-27 14:42
 	added in everything to the /edit route 
 	finished with index.html
 
-korsunM - 2017-11-28 0:42
+korsunM - 2017-11-28 00:42
 	finished api implementation, however it is imperfect.
 	HTML needs to be frameworkified
 	API based code needs testings
@@ -35,12 +35,13 @@ xuJ - 2017-11-28 00:56
 	finished with data structures for friends and requests for every route
 	added in conditionals for index.html and edit.html
 	
-parkP - 2017-11-28 4:12
+parkP - 2017-11-28 04:12
 	added more to initialize_fnfr() method in presents.py
 	finished with findfriends.html
 	finished the friends route in presents.py but couldn't test it
 	completed profile.html except for product section
 	finished the profileroute in presents.py but couldn't test it
 
-
+xuJ - 2017-11-28 14:39
+	added in sample data in db.py
 

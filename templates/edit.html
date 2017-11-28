@@ -19,7 +19,13 @@
 				Age <br>
 				<input name="age" type="text" value ="{{data[3]}}"> <br><br>
 				Gender <br>
-				<input name="gender" type="text" value ="{{data[4]}}"> <br><br>
+				<input list="gender" name="gender">
+				  <datalist id="fmo">
+				    <option value="female">
+				    <option value="male">
+				    <option value="other">
+				  </datalist>
+				  <input type="submit"> <br><br>
 				Hobbies/Interests <br>
 				<textarea name="hobbies">
 				{% data[5] %}

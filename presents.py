@@ -64,7 +64,7 @@ def initialize_fnfr():
       
 @my_app.route('/')
 def index():
-#    initialize_fnfr()
+    initialize_fnfr()
 	if logged_in():
 		return render_template('index.html', data=my_data, fr=requests, frands=friends)
 	else:
@@ -110,7 +110,8 @@ def create_user():
         if result == 0:
             name = request.form['name']
             my_username = request.form['username']
-            pw = request.form['password1']
+            pass_unhashed = request.form['password1']
+            pw = hashlib.md5(pass_unhashed).hexdigest()
             flash('Account Created')
             c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(my_username, pw, name))
             return redirect(url_for('edit'))
@@ -126,7 +127,7 @@ def create_user():
 
 @my_app.route('/edit')
 def edit():
-#    initialize_fnfr()
+    initialize_fnfr()
     if request.method == 'POST':
         if request.form['password']==request.form['confirm']:
             name = request.form['name']
@@ -172,7 +173,7 @@ def friends():
     
 @my_app.route('/profile')
 def profile():
- #   initialize_fnfr()
+    initialize_fnfr()
     if request.method == "POST":
         person = request.form['person']
 		#new_data is the personal information of whoever you're looking at (that isn't you)
@@ -194,7 +195,7 @@ def profile():
     
 @my_app.route('/add', methods =['GET','POST'])
 def add():
- #   initialize_fnfr()
+    initialize_fnfr()
     if request.args.get('search') == 'Submit':
         items =searchWalmart(requests.args.get('lookup'))
         return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
@@ -204,7 +205,7 @@ def add():
     
 @my_app.route('/product')
 def product():
- #   initialize_fnfr()
+    initialize_fnfr()
     return render_template('product.html', data=my_data, fr=requests)
     
 if __name__ == '__main__':
