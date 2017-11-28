@@ -1,3 +1,29 @@
 {% extends "base.html" %}
 
 {% block body %}
+
+<form action="/friends">
+	Search: <input type="text" name="Name"><br>
+<input type="submit" value="Submit">
+</form>
+
+<br><br>
+
+{% for each in stranger %}
+	{{stranger[each][0]}} ({{each}}) <br>
+	Age: {{stranger[each][1]}} <br>
+	Gender: {{stranger[each][2]}} <br>
+	Hobbies: {{stranger[each][3]}}<br>
+	<form method="POST" action="/friends">
+	<button name="person" type="submit" value="{{each}}">Send Friend Request</button><br>
+	</form>
+{% endfor %}
+<br><br><br>
+
+<h1> Friend Requests </h1>
+{% for each in fr %}
+	<li>{{fr[each][0]}}({{each}})</li>
+	<form method="POST" action="/friends">
+	<button name="person" type="submit" value="{{each}}">Accept</button><br>
+	</form>
+{% endfor %}

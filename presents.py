@@ -23,6 +23,7 @@ my_data = []; #array in the form [user, pass, name, age, gender, hobbies]
 my_username = "";
 friends = {}; #dictionary in the form (username: [name, age, gender, hobbies, [wishes]])
 requests = {}; #dictionary in the form (username: [name, age, gender, hobbies])
+strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 #==========================================================
 
@@ -83,6 +84,21 @@ def initialize_fnfr():
     for each in reqs:
         req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user = %s"%(each[0]))
         requests[each[0]] = req_data
+	
+	#this is the same thing except we're making a dictionary for non-friends now
+	stranger = c.execute("SELECT user FROM users WHERE user != %s"%(my_username))
+	for each in stranger:
+		#we add every user who is not the actual user in session
+		strange_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user %s"%(each[0]))
+		strangers[each[0]] = strange_data
+		#we remove usernames of friends
+		for each2 in friends: 
+			if each == each2:
+				strangers.pop(each)
+		#we remove usernames of strangers who we have friend requested
+		for each3 in requests:
+			if each == each3:
+				strangers.pop(each)
     
     
 @my_app.route('/', methods=['POST', 'GET'])
@@ -166,15 +182,50 @@ def edit():
 @my_app.route('/friends')
 def friends():
     initialize_fnfr()
-    return render_template('findfriends.html', data=my_data, fr=requests)
+	if request.method == "POST":
+		#if statement for when user presses "accept" or "request" button on friends page
+		if request.form['person']:
+			person = request.form['person']
+			#requests and friends datatables get updated
+			if person in strangers:
+				c.execute("INSERT INTO requests VALUES(\"%s\", \"%s\");"%(person, my_username))
+			if person in friends:
+				c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(my_username, person))
+				c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(person, my_username))
+			return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
+		#if statement for when user presses "search" button on friends page
+		if request.form['name']:
+			searched = {}
+			for each in strangers:
+				if name in each or name in each[0]:
+					searched_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user %s"%(each))
+					searched[each[0]] = searched_data
+			return render_template('findfriends.html', data=my_data, fr=requests, stranger=searched)
+	#when friends page is accessed from index
+	else:
+		return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
     
 @my_app.route('/profile')
 def profile():
     initialize_fnfr()
     if request.method == "POST":
         person = request.form['person']
+		#new_data is the personal information of whoever you're looking at (that isn't you)
+		new_data = []
+		new_data = c.execute("SELECT user FROM users WHERE user = %s"%(person))
+		#making a products dictionary to use in the html
+		products = []
+		for each in reqs:
+			product_data = c.execute("SELECT name,id FROM users WHERE user = %s"%(person))
+			products[each[0]] = product_data
+		return render_template('profile.html', data=new_data, fr=requests, product=products)
     else:
-        return render_template('profile.html', data=my_data, fr=requests)
+		#making a products dictionary to use in the html
+		products = []
+		for each in reqs:
+			product_data = c.execute("SELECT name,id FROM users WHERE user = %s"%(my_username))
+			products[each[0]] = product_data
+        return render_template('profile.html', data=my_data, fr=requests, product=products)
     
 @my_app.route('/add', methods =['GET','POST'])
 def add():
