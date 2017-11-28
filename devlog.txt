@@ -37,6 +37,7 @@ korsunM - 2017-11-28 0:42
 
 xuJ - 2017-11-28 00:56
 	finished with data structures for friends and requests for every route
+	added in conditionals for index.html and edit.html
 
 
 
