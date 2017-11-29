@@ -22,11 +22,11 @@ def make_database():
 	pw4 = hashlib.sha224( "pen" ).hexdigest()
 	pw5 = hashlib.sha224( "crazy" ).hexdigest()
 
-	c.execute("INSERT INTO users VALUES('dw',\"%s\",'DW',,\"\",\"\");"%(pw1))
+	c.execute("INSERT INTO users VALUES('dw',\"%s\",'DW',0,\"\",\"\");"%(pw1))
 	c.execute("INSERT INTO users VALUES('ppapi',\"%s\",'PPAPi',17,'other','coding, volleyball, dancing, eating, snowboarding');"%(pw2))
 	c.execute("INSERT INTO users VALUES('comp',\"%s\",'PC',35,'male','run, cool down, shine bright like a diamond');"%(pw3))
 	c.execute("INSERT INTO users VALUES('apple',\"%s\",'Apple',10,'female','read books, rot, fall');"%(pw4))
-	c.execute("INSERT INTO users VALUES('banana',\"%s\",'Banana',,\"\",\"\");"%(pw5))
+	c.execute("INSERT INTO users VALUES('banana',\"%s\",'Banana',0,\"\",\"\");"%(pw5))
 
 
 	c.execute("INSERT INTO friends VALUES('dw','ppapi')")

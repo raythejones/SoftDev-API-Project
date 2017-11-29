@@ -6,34 +6,37 @@
 		<h1>Update Profile </h1>
 		<form method="POST" action="">
 			<div>
-				Name <br>
-				{{data[2]}} <br><br>
-				Username <br>
-				{{data[0]}} <br><br>
-				Change Password <br>
-				<input name="password" type="password"> <br><br>
-				Confirm Password <br>
-				<input name="confirm" type="password"> <br><br>
+				<label>FULL NAME:</label>
+					{{data[2]}} <br>
+				<label>USERNAME:</label>
+					{{data[0]}} <br>
+				<label>CHAMGE PASSWORD:
+					<input name="password" type="password">
+				</label><br>
+				<label>CONFIRM PASSWORD:
+					<input name="confirm" type="password">
+				</label><br>
 			</div>
 			<div>
-				Age <br>
-				<input name="age" type="text" value ="{{data[3]}}"> <br><br>
-				Gender <br>
-				<input list="gender" name="gender">
-				  <datalist id="fmo">
-				    <option value="female">
-				    <option value="male">
-				    <option value="other">
-				  </datalist>
-				  <input type="submit"> <br><br>
-				Hobbies/Interests <br>
+				<label>AGE:
+					<input name="age" type="text" value ="{{data[3]}}">
+				</label><br>
+				<label>GENDER:
+				  <select name="gender">
+				    <option value="female">female</option>
+				    <option value="male">male</option>
+				    <option value="other">other</option>
+				  </select>
+				</label><br>
+				<label>HOBBIES/INTERESTS:
 				<textarea name="hobbies">
-				{% data[5] %}
+				{% if data[5] %}
 				    {{data[5]}}
 				{% else %}
 				    separate interests with commas
 				{% endif %}
 				</textarea>
+				</label><br>
 				<input type="submit" value="Submit"> <br><br>
 			</div>
 		</form>
