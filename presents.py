@@ -11,7 +11,6 @@ import os
 #from utils import db
 import utils.db as db
 import utils.auth as auth
-import utils.api as api
 
 
 
@@ -101,7 +100,7 @@ def login():
 
         # CREATE ACCOUNT
         if request.form['type'] == 'Signup':
-            cr_acc_res = auth.create_account( request.form['usr'], request.form['pwd'] )
+            cr_acc_res = auth.create_account( request.form['usr'], request.form['pwd'], request.form['pwd2'] )
             # if successful
             if cr_acc_res == 0:
                 flash("Account created")
@@ -109,6 +108,10 @@ def login():
             # if username already exists
             if cr_acc_res == 1:
                 flash("That username already exists")
+                return redirect( url_for('login') )
+		# match passwords
+            if cr_acc_res == 2:
+                flash("Passwords don't match")
                 return redirect( url_for('login') )
 
     # just render normally if no post
@@ -133,11 +136,12 @@ def edit():
     if 'username' in session:
         if request.method == 'POST':
             if request.form['password']==request.form['confirm']:
-                pw = request.form['password']
+                pw_unhashed = request.form['password']
+                pw = hashlib.sha224( pw_unhashed ).hexdigest()
                 age = request.form['age']
                 gender = request.form['gender']
                 hobbies = request.form['hobbies']
-                c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");"%(my_username, pw, name, age, gender, hobbies))
+                c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
                 return redirect(url_for('edit'))
             else:
                 flash('Passwords do not match.')
