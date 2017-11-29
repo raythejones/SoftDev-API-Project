@@ -103,8 +103,8 @@ def login():
             cr_acc_res = auth.create_account( request.form['usr'], request.form['pwd'] )
             # if successful
             if cr_acc_res == 0:
-                flash("Account created, please login")
-                return redirect( url_for('login') )
+                flash("Account created")
+                return redirect( url_for('edit') )
             # if username already exists
             if cr_acc_res == 1:
                 flash("That username already exists")
@@ -142,7 +142,7 @@ def edit():
                 flash('Passwords do not match.')
                 return redirect(url_for('edit'))
         else:
-            my_data = c.execute("SELECT user FROM users WHERE user = %s"%(my_username))
+            my_data = c.execute("SELECT user FROM users WHERE user = %s"%(session["username"]))
             return render_template('edit.html', data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
