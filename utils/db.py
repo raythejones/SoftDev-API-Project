@@ -29,23 +29,23 @@ def make_database():
 	c.execute("INSERT INTO users VALUES('banana',\"%s\",'Banana',0,\"\",\"\");"%(pw5))
 
 
-	c.execute("INSERT INTO friends VALUES('dw','ppapi')")
-	c.execute("INSERT INTO friends VALUES('ppapi','dw')")
-	c.execute("INSERT INTO friends VALUES('dw','apple')")
-	c.execute("INSERT INTO friends VALUES('apple','dw')")
-	c.execute("INSERT INTO friends VALUES('ppapi','apple')")
-	c.execute("INSERT INTO friends VALUES('apple','ppapi')")
-	c.execute("INSERT INTO friends VALUES('comp','ppapi')")
-	c.execute('INSERT INTO friends VALUES("ppapi","comp")')
+	c.execute("INSERT INTO friends VALUES('dw','ppapi');")
+	c.execute("INSERT INTO friends VALUES('ppapi','dw');")
+	c.execute("INSERT INTO friends VALUES('dw','apple');")
+	c.execute("INSERT INTO friends VALUES('apple','dw');")
+	c.execute("INSERT INTO friends VALUES('ppapi','apple');")
+	c.execute("INSERT INTO friends VALUES('apple','ppapi');")
+	c.execute("INSERT INTO friends VALUES('comp','ppapi');")
+	c.execute('INSERT INTO friends VALUES("ppapi","comp");')
 
 
-	c.execute("INSERT INTO requests VALUES('dw','comp')")
-	c.execute("INSERT INTO requests VALUES('apple','banana')")
-	c.execute("INSERT INTO requests VALUES('apple','comp')")
+	c.execute("INSERT INTO requests VALUES('dw','comp');")
+	c.execute("INSERT INTO requests VALUES('apple','banana');")
+	c.execute("INSERT INTO requests VALUES('apple','comp');")
 
-        c.execute("INSERT INTO products VALUES('dw','Nintendo Switch Console Gray Joy-Con')")
-        c.execute("INSERT INTO products VALUES('dw','LEGO Disney Princess Belle's Enchanted Castle 41067')")
-
+        c.execute("INSERT INTO products VALUES('dw','Nintendo Switch Console Gray Joy-Con');")
+        #c.execute("INSERT INTO products VALUES('dw','LEGO Disney Princess Belle\'s Enchanted Castle');")
+        #41067
 
 	#==========================================================
 	db.commit() #save changes
