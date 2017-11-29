@@ -11,6 +11,8 @@ import os
 #from utils import db
 import utils.db as db
 import utils.auth as auth
+import utils.api as api
+
 
 
 my_app = Flask (__name__)
@@ -32,7 +34,7 @@ strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 #helper methods for login, logout,
 
 def initialize_fnfr():
-    people = c.execute("SELECT friend FROM friends WHERE user = %s"%(my_username))
+    people = c.execute("SELECT friend FROM friends WHERE user = %s" % (my_username))
     for each in people:
         friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user = %s"%(each[0]))
         friend_wishes = []
@@ -65,11 +67,11 @@ def initialize_fnfr():
       
 @my_app.route('/')
 def index():
-#    initialize_fnfr()
 	if auth.is_logged_in():
-		return render_template('index.html', data=my_data, fr=requests, frands=friends,)
+            initialize_fnfr()
+	    return render_template('index.html', data=my_data, fr=requests, frands=friends,)
 	else:
-		return redirect(url_for('login'))
+       	    return redirect(url_for('login'))
 
             
 @my_app.route('/login', methods = ['POST', 'GET'] )
@@ -82,6 +84,7 @@ def login():
             log_res = auth.login( request.form['usr'], request.form['pwd'] )
             # successful login
             if log_res == 0:
+                my_username= request.form['usr']
                 flash("You have logged in successfully!")
                 return redirect( url_for('index') )
             # bad password
