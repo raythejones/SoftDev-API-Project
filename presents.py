@@ -68,7 +68,7 @@ def initialize_fnfr():
 @my_app.route('/')
 def index():
 	if 'username' in session:
-	    return render_template('index.html', data=my_data, fr=requests, frands=friends,)
+	    return render_template('index.html', data=my_data, fr=requests, frands=friends)
 	else:
        	    return redirect(url_for('login'))
 
@@ -143,7 +143,7 @@ def edit():
                 flash('Passwords do not match.')
                 return redirect(url_for('edit'))
         else:
-            my_data = c.execute("SELECT * FROM users WHERE username = %s"%(session["username"]))
+            my_data = c.execute("SELECT user FROM users WHERE user = %s"%(session["username"]))
             return render_template('edit.html', data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
@@ -223,7 +223,7 @@ def product():
             info=api.searchWalmart(name)[0]
             info=api.productInfo(info)
             vids=api.searchYoutube(name)
-            return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=youtubevids, data=my_data, fr=requests)
+            return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=vids, data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
     
