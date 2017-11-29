@@ -14,7 +14,7 @@ def make_database():
 	c.execute("CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT, name TEXT, age INT, gender TEXT, hobbies TEXT);")
 	c.execute("CREATE TABLE friends (username TEXT , friend TEXT );")
 	c.execute("CREATE TABLE requests (username TEXT , request TEXT );")
-	c.execute("CREATE TABLE products (username INT , name TEXT, id TEXT);")
+	c.execute("CREATE TABLE products (username INT , name TEXT);")
 
 	pw1 = hashlib.sha224( "pass" ).hexdigest()
 	pw2 = hashlib.sha224( "mmomi" ).hexdigest()
