@@ -9,8 +9,9 @@ from flask import Flask, render_template, request, session, redirect, url_for, f
 import sqlite3, hashlib
 import os
 #from utils import db
-import auth
-from auth import logged_in
+import utils.db as db
+import utils.auth as auth
+
 
 my_app = Flask (__name__)
 my_app.secret_key = os.urandom(100)
@@ -28,7 +29,7 @@ strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 #==========================================================
 
-#helper methods for login, logout, and create_user
+#helper methods for login, logout,
 
 def initialize_fnfr():
     people = c.execute("SELECT friend FROM friends WHERE user = %s"%(my_username))
@@ -64,65 +65,56 @@ def initialize_fnfr():
       
 @my_app.route('/')
 def index():
-    initialize_fnfr()
-	if logged_in():
-		return render_template('index.html', data=my_data, fr=requests, frands=friends)
+#    initialize_fnfr()
+	if auth.is_logged_in():
+		return render_template('index.html', data=my_data, fr=requests, frands=friends,)
 	else:
-		return redirect(url_for('login'))	
-    	
-@my_app.route('/login', methods=['POST', 'GET'])
+		return redirect(url_for('login'))
+
+            
+@my_app.route('/login', methods = ['POST', 'GET'] )
 def login():
-    if logged_in():
-        flash('User is already logged in.')
-        return redirect(url_for('index'))
+    # checks for post method to respond to submit button
     if request.method == 'POST':
-        result = auth.login(request.form['username'], request.form['password'])
-        if result == 0:
-            flash('You have logged in!')
-            return redirect(url_for('profile'))
-        elif result == 1:
-            flash('Incorrect password.')
-            return redirect(url_for('login'))
-        elif result == 2:
-            flash('This username doesn\'t exist.')
-            return redirect(url_for('login'))
+        # LOGIN
+        if request.form['type'] == 'Login':
+        # uses the database method to check the login
+            log_res = auth.login( request.form['usr'], request.form['pwd'] )
+            # successful login
+            if log_res == 0:
+                flash("You have logged in successfully!")
+                return redirect( url_for('index') )
+            # bad password
+            if log_res == 1:
+                flash("Incorrect password")
+                return redirect( url_for('login') )
+            # unknown username
+            if log_res == 2:
+                flash("Unknown username")
+                return redirect( url_for('login') )
+
+        # CREATE ACCOUNT
+        if request.form['type'] == 'Signup':
+            cr_acc_res = auth.create_account( request.form['usr'], request.form['pwd'] )
+            # if successful
+            if cr_acc_res == 0:
+                flash("Account created, please login")
+                return redirect( url_for('login') )
+            # if username already exists
+            if cr_acc_res == 1:
+                flash("That username already exists")
+                return redirect( url_for('login') )
+
+    # just render normally if no post
     else:
-        return render_template('login.html', title = 'Login')
+        return render_template("login.html")
+
 
 @my_app.route('/logout')
 def logout():
-    if logged_in():
-        auth.logout()
-        flash('User been logged out.')
-        return redirect(url_for('index'))
-    flash('You are not logged in!')
-    return redirect(url_for('login'))
-
-@my_app.route('/create_user', methods=['GET', 'POST'])
-def create_user():
-    if logged_in():
-        flash('You are already logged in!')
-        return redirect(url_for('profile'))
-    if request.method == 'POST':
-        result = auth.create(request.form['username'],
-                             request.form['password1'],
-                             request.form['password2'])
-        if result == 0:
-            name = request.form['name']
-            my_username = request.form['username']
-            pass_unhashed = request.form['password1']
-            pw = hashlib.md5(pass_unhashed).hexdigest()
-            flash('Account Created')
-            c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(my_username, pw, name))
-            return redirect(url_for('edit'))
-        elif result == 1:
-            flash('Passwords do not match.')
-            return redirect(url_for('create_user'))
-        elif result == 2:
-            flash('Username already exists.')
-            return redirect(url_for('create_user'))
-    else:
-        return render_template('create_user.html', title = 'Create')
+    auth.logout()
+    flash("You have been logged out")
+    return redirect( url_for("index"))
 
 
 @my_app.route('/edit')
@@ -147,7 +139,7 @@ def edit():
     
 @my_app.route('/friends')
 def friends():
-    initialize_fnfr()
+ #   initialize_fnfr()
 	if request.method == "POST":
 		#if statement for when user presses "accept" or "request" button on friends page
 		if request.form['person']:
@@ -173,9 +165,9 @@ def friends():
     
 @my_app.route('/profile')
 def profile():
-    initialize_fnfr()
+#    initialize_fnfr()
     if request.method == "POST":
-        person = request.form['person']
+		person = request.form['person']
 		#new_data is the personal information of whoever you're looking at (that isn't you)
 		new_data = []
 		new_data = c.execute("SELECT user FROM users WHERE user = %s"%(person))
@@ -191,7 +183,7 @@ def profile():
 		for each in reqs:
 			product_data = c.execute("SELECT name,id FROM users WHERE user = %s"%(my_username))
 			products[each[0]] = product_data
-        return render_template('profile.html', data=my_data, fr=requests, product=products)
+		return render_template('profile.html', data=my_data, fr=requests, product=products)
     
 @my_app.route('/add', methods =['GET','POST'])
 def add():

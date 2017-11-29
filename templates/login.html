@@ -1,17 +1,40 @@
 {% extends "base.html" %}
 
-
 {% block body %}
+  <br><br><br>
+<div class="grid-x grid-padding-x">
+      <div class="large-6 cell">
+	<h3 align="center">LOGIN</h3><hr>
+      <form action="/login" method="POST">
+	<label>USERNAME:
+	  <input name="usr" type="text">
+	</label>
+	<label>PASSWORD:
+	  <input name="pwd" type="PASSWORD">
+	</label> <br>
+	<div class="text-center">
+	  <input type="submit" class="button success" name="type" value="Login">
+	</div>
+      </form>
+</div>
 
-<h1>Login</h1>
 
-<form method="POST" action="">
-  Username<br>
-  <input type="text" name="username"><br><br>
-  Password<br>
-  <input type="password" name="password"><br><br>
-  Create an account <a href="{{ url_for('create_user') }}">here</a>!<br><br>
-  <input type="submit">
-</form>
-      
+      <div class="large-6 cell">
+      	<h3 align="center">SIGNUP</h3><hr>
+      <form action="/login" method="POST">
+	<label>USERNAME:
+	  <input name="usr" type="text">
+	</label>
+	<label>PASSWORD:
+	  <input name="pwd" type="PASSWORD">
+	</label> <br>
+		<label>CONFIRM PASSWORD:
+	  <input name="pwd" type="PASSWORD">
+	</label> <br>
+	<div class="text-center">
+	  <input type="submit" class="button alert" name="type" value="Signup">
+	</div>
+      </form>
+</div></div>
+          
 {% endblock %}
