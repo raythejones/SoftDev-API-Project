@@ -41,24 +41,34 @@ def print_list(l):
     
     
 def initialize_fnfr():
-    people = c.execute("SELECT friend FROM friends WHERE username == %s" % (session['username']))
-    print(people)
-    for each in people:
-        friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
-        friend_wishes = []
-        temp = c.execute("SELECT id FROM products WHERE username == %s"%(each[0]))
-        for wish in temp:
-            friend_wishes.append(wish[0])
-        friend_data.append(friend_wishes)
-        friends[each[0]] = friend_data
-    
-    reqs = c.execute("SELECT request FROM requests WHERE username == %s"%(my_username))
-    for each in reqs:
-        req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
-        requests[each[0]] = req_data
-	
+    go1 = 0
+    for each in c.execute("SELECT username FROM friends"):
+        if each[0] == session['username']:
+            go1 = 1
+    if go1 == 1:
+        people = c.execute("SELECT friend FROM friends WHERE username == %s" % (session['username']))
+        print(people)
+        for each in people:
+            friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
+            friend_wishes = []
+            temp = c.execute("SELECT id FROM products WHERE username == %s"%(each[0]))
+            for wish in temp:
+                friend_wishes.append(wish[0])
+            friend_data.append(friend_wishes)
+            friends[each[0]] = friend_data
+
+    go2 = 0
+    for each in c.execute("SELECT username FROM requests"):
+        if each[0] == session['username']:
+            go2 = 1
+    if go2 == 1:
+        reqs = c.execute("SELECT request FROM requests WHERE username == %s"%(session['username']))
+        for each in reqs:
+            req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
+            requests[each[0]] = req_data
+
 	#this is the same thing except we're making a dictionary for non-friends now
-	stranger = c.execute("SELECT user FROM users WHERE username != %s"%(my_username))
+	stranger = c.execute("SELECT user FROM users WHERE username != %s"%(session['username']))
 	for each in stranger:
 		#we add every user who is not the actual user in session
 		strange_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
@@ -92,10 +102,10 @@ def login():
             # successful login
             if log_res == 0:
                 session['username']= request.form['usr']
-                name = request.form['name']
+                #name = request.form['name']
                 pw = request.form['pwd']
                 flash("You have logged in successfully!")
-                c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(session['username'], pw, name))
+                #c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(session['username'], pw, session['username']))
                 initialize_fnfr()
                 return redirect( url_for('index') )
             # bad password

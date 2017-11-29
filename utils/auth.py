@@ -32,11 +32,9 @@ def logout():
 # creates an account for the user, checking that the username is available
 # returns 0 for a successful creation and 1 for the username already existing
 def create_account(username, password1, password2):
-    if not username in db_tool.get_users():
+    if not username in get_users():
         if password1 == password2:
-            user_id = db_tool.add_user(username)
-            set_password(user_id, password1)
-            login(username, password1)
-            return 0
+           add_user( username, hashlib.sha224(password1).hexdigest())
+           return 0
         return 1
     return 2
