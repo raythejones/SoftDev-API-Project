@@ -53,7 +53,7 @@ korsunM - 2017-11-28 23:36
 	fixed database errors
 	addwish.html now works
 
-xuJ - 2017-11-29 02:28
+xuJ - 2017-11-29 03:15
 	small bugs
-	fixed /edit route so that it would display the current data
+	fixed /edit route so that it would display the current data and updated data
 
