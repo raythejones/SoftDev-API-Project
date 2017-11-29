@@ -140,7 +140,7 @@ def logout():
     return redirect( url_for("index"))
 
 
-@my_app.route('/edit')
+@my_app.route('/edit', methods = ['POST', 'GET'] )
 def edit():
     if 'username' in session:
         if request.method == 'POST':
@@ -153,11 +153,10 @@ def edit():
                     hobbies = request.form['hobbies']
                     c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
                 else:
-                    pw = my_data[1]
                     age = request.form['age']
                     gender = request.form['gender']
                     hobbies = request.form['hobbies']
-                    c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
+                    c.execute("UPDATE users SET age = %s, gender = \"%s\", hobbies = \"%s\" WHERE username = \"%s\";"%(age, gender, hobbies, session["username"]))
                 for me in c.execute("SELECT * FROM users WHERE username = \"%s\";"%(session["username"])):
                     my_data = me
                 return redirect(url_for('edit'))
