@@ -11,6 +11,7 @@ import os
 #from utils import db
 import utils.db as db
 import utils.auth as auth
+import utils.api as api
 
 
 
@@ -203,8 +204,9 @@ def profile():
 def add():
     if 'username' in session:
         if request.args.get('search') == 'Submit':
-            items =searchWalmart(request.args.get('lookup'))
-            return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
+            lookup = request.args.get('lookup')
+            items =api.searchWalmart(lookup)
+            return render_template('addwish.html', stuff=items,query=lookup, data=my_data, fr=requests)
         else:
             flash('Please search something')
             return render_template('addwish.html', data=my_data, fr=requests)
@@ -218,9 +220,9 @@ def product():
         if request.method == 'GET':
             name=request.args.get('name')
             info={}
-            info=searchWalmart(name)[0]
-            info=productInfo(info)
-            vids=searchYoutube(name)
+            info=api.searchWalmart(name)[0]
+            info=api.productInfo(info)
+            vids=api.searchYoutube(name)
             return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=youtubevids, data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))

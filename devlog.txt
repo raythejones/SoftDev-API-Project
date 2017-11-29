@@ -51,6 +51,7 @@ xuJ - 2017-11-28 14:39
 
 korsunM - 2017-11-28 23:36
 	fixed database errors
+	addwish.html now works
 
 
 
