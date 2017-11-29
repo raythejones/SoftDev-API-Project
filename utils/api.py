@@ -28,17 +28,18 @@ def productInfo(dict):
     
 
 def searchYoutube(name):
-     r=requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+query+'&type=video&videoCaption=closedCaption&key='+keys['Youtube'])
+     r=requests.get('https://www.googleapis.com/youtube/v3/search?part=snippet&q='+name+'&type=video&videoCaption=closedCaption&key='+keys['Youtube'])
      dict=r.json()
      items=dict['items']
-     video=items[0]['videoId']
+     links = []                    
+     video=items[0]['id']['videoId']
      links=[]
      link='https://www.youtube.com/embed/'+video
      links.append(link)
-     video=items[1]['videoId']
+     video=items[1]['id']['videoId']
      link='https://www.youtube.com/embed/'+video
      links.append(link)
-     video=items[2]['videoId']
+     video=items[2]['id']['videoId']
      link='https://www.youtube.com/embed/'+video
      links.append(link)
      return links

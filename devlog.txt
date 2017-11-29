@@ -1,4 +1,4 @@
-﻿xuJ — 2017-11-17 14:04
+xuJ — 2017-11-17 14:04
 	setup the repo with folders and files needed
 	setup the main setup python code for db and routing
 
@@ -53,5 +53,7 @@ korsunM - 2017-11-28 23:36
 	fixed database errors
 	addwish.html now works
 
-
+xuJ - 2017-11-29 02:28
+	small bugs
+	fixed /edit route so that it would display the current data
 

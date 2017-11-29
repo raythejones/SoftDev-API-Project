@@ -11,6 +11,7 @@ import os
 #from utils import db
 import utils.db as db
 import utils.auth as auth
+import utils.api as api
 
 
 
@@ -31,6 +32,14 @@ strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 #helper methods for login, logout,
 
+def print_list(l):
+    ans = ""
+    for each in l:
+        ans += str(each)
+        ans += ", "
+    print ans
+    
+    
 def initialize_fnfr():
     go1 = 0
     for each in c.execute("SELECT username FROM friends"):
@@ -77,7 +86,7 @@ def initialize_fnfr():
 @my_app.route('/')
 def index():
 	if 'username' in session:
-	    return render_template('index.html', data=my_data, fr=requests, frands=friends,)
+	    return render_template('index.html', data=my_data, fr=requests, frands=friends)
 	else:
        	    return redirect(url_for('login'))
 
@@ -146,18 +155,28 @@ def edit():
     if 'username' in session:
         if request.method == 'POST':
             if request.form['password']==request.form['confirm']:
-                pw_unhashed = request.form['password']
-                pw = hashlib.sha224( pw_unhashed ).hexdigest()
-                age = request.form['age']
-                gender = request.form['gender']
-                hobbies = request.form['hobbies']
-                c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
+                if request.form['password']!="":
+                    pw_unhashed = request.form['password']
+                    pw = hashlib.sha224( pw_unhashed ).hexdigest()
+                    age = request.form['age']
+                    gender = request.form['gender']
+                    hobbies = request.form['hobbies']
+                    c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
+                else:
+                    pw = my_data[1]
+                    age = request.form['age']
+                    gender = request.form['gender']
+                    hobbies = request.form['hobbies']
+                    c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
+                for me in c.execute("SELECT * FROM users WHERE username = \"%s\";"%(session["username"])):
+                    my_data = me
                 return redirect(url_for('edit'))
             else:
                 flash('Passwords do not match.')
                 return redirect(url_for('edit'))
         else:
-            my_data = c.execute("SELECT * FROM users WHERE username = %s"%(session["username"]))
+            for me in c.execute("SELECT * FROM users WHERE username = \"%s\";"%(session["username"])):
+                my_data = me
             return render_template('edit.html', data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
@@ -237,7 +256,7 @@ def product():
             info=api.searchWalmart(name)[0]
             info=api.productInfo(info)
             vids=api.searchYoutube(name)
-            return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=youtubevids, data=my_data, fr=requests)
+            return render_template('product.html',productName=info['name'], desc=info['desc'], link=info['link'], image=info['image'], vids=vids, data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
     
