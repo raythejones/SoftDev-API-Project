@@ -133,11 +133,12 @@ def edit():
     if 'username' in session:
         if request.method == 'POST':
             if request.form['password']==request.form['confirm']:
-                pw = request.form['password']
+                pw_unhashed = request.form['password']
+                pw = hashlib.sha224( pw_unhashed ).hexdigest()
                 age = request.form['age']
                 gender = request.form['gender']
                 hobbies = request.form['hobbies']
-                c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");"%(my_username, pw, name, age, gender, hobbies))
+                c.execute("UPDATE users SET password = \"%s\", name = \"%s\", age = \"%d\", gender = \"%s\" hobbies = \"%s\" WHERE username = \"%s\";"%(pw, name, age, gender, hobbies, session["username"]))
                 return redirect(url_for('edit'))
             else:
                 flash('Passwords do not match.')
