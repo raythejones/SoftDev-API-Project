@@ -142,7 +142,7 @@ def edit():
                 flash('Passwords do not match.')
                 return redirect(url_for('edit'))
         else:
-            my_data = c.execute("SELECT user FROM users WHERE user = %s"%(session["username"]))
+            my_data = c.execute("SELECT * FROM users WHERE username = %s"%(session["username"]))
             return render_template('edit.html', data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
