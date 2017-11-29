@@ -30,7 +30,13 @@
 			</ul>
 		</div>
 	</div>
-	
+    <ul>
+      {% set messages = get_flashed_messages() %}
+      {% for message in messages %}
+      <li>{{ message }}</li>
+      {% endfor %}
+    </ul>
+    <hr>
 	{% block body %}
 
     {% endblock %}
