@@ -46,32 +46,32 @@ def initialize_fnfr():
         if each[0] == session['username']:
             go1 = 1
     if go1 == 1:
-        people = c.execute("SELECT friend FROM friends WHERE username == %s" % (session['username']))
+        people = c.execute("SELECT friend FROM friends WHERE username == \"%s\";" % (session['username']))
         print(people)
         for each in people:
-            friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
+            friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
             friend_wishes = []
-            temp = c.execute("SELECT id FROM products WHERE username == %s"%(each[0]))
+            temp = c.execute("SELECT name FROM products WHERE username == \"%s\";"%(each[0]))
             for wish in temp:
                 friend_wishes.append(wish[0])
             friend_data.append(friend_wishes)
             friends[each[0]] = friend_data
 
     go2 = 0
-    for each in c.execute("SELECT username FROM requests"):
+    for each in c.execute("SELECT username FROM requests;"):
         if each[0] == session['username']:
             go2 = 1
     if go2 == 1:
-        reqs = c.execute("SELECT request FROM requests WHERE username == %s"%(session['username']))
+        reqs = c.execute("SELECT request FROM requests WHERE username == \"%s\";"%(session['username']))
         for each in reqs:
-            req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
+            req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
             requests[each[0]] = req_data
 
 	#this is the same thing except we're making a dictionary for non-friends now
-	stranger = c.execute("SELECT user FROM users WHERE username != %s"%(session['username']))
+	stranger = c.execute("SELECT user FROM users WHERE username != \"%s\";"%(session['username']))
 	for each in stranger:
 		#we add every user who is not the actual user in session
-		strange_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
+		strange_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
 		strangers[each[0]] = strange_data
 		#we remove usernames of friends
 		for each2 in friends: 
