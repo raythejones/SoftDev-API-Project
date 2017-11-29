@@ -12,9 +12,9 @@ def make_database():
 	#INSERT YOUR POPULATE CODE IN THIS ZONE
 
 	c.execute("CREATE TABLE users (username TEXT PRIMARY KEY, password TEXT, name TEXT, age INT, gender TEXT, hobbies TEXT);")
-#	c.execute("CREATE TABLE friends (username TEXT PRIMARY KEY, friend TEXT PRIMARY KEY );")
-#	c.execute("CREATE TABLE requests (username TEXT PRIMARY KEY, request TEXT );")
-#	c.execute("CREATE TABLE products (username INT PRIMARY KEY, name TEXT, id TEXT);")
+	c.execute("CREATE TABLE friends (username TEXT , friend TEXT );")
+	c.execute("CREATE TABLE requests (username TEXT , request TEXT );")
+	c.execute("CREATE TABLE products (username INT , name TEXT, id TEXT);")
 
 	pw1 = hashlib.md5('pass').hexdigest()
 	pw2 = hashlib.md5('mmomi').hexdigest()
@@ -29,19 +29,19 @@ def make_database():
 	db.execute("INSERT INTO users VALUES('banana',\"%s\",'Banana',\"\",\"\",\"\");"%(pw5))
 
 
-	# c.execute("INSERT INTO friends VALUES('dw','ppapi')")
-	# c.execute("INSERT INTO friends VALUES('ppapi','dw')")
-	# c.execute("INSERT INTO friends VALUES('dw','apple')")
-	# c.execute("INSERT INTO friends VALUES('apple','dw')")
-	# c.execute("INSERT INTO friends VALUES('ppapi','apple')")
-	# c.execute("INSERT INTO friends VALUES('apple','ppapi')")
-	# c.execute("INSERT INTO friends VALUES('comp','ppapi')")
-	# c.execute('INSERT INTO friends VALUES("ppapi","comp")')
+	c.execute("INSERT INTO friends VALUES('dw','ppapi')")
+	c.execute("INSERT INTO friends VALUES('ppapi','dw')")
+	c.execute("INSERT INTO friends VALUES('dw','apple')")
+	c.execute("INSERT INTO friends VALUES('apple','dw')")
+	c.execute("INSERT INTO friends VALUES('ppapi','apple')")
+	c.execute("INSERT INTO friends VALUES('apple','ppapi')")
+	c.execute("INSERT INTO friends VALUES('comp','ppapi')")
+	c.execute('INSERT INTO friends VALUES("ppapi","comp")')
 
 
-	# c.execute("INSERT INTO requests VALUES('dw','comp')")
-	# c.execute("INSERT INTO requests VALUES('apple','banana')")
-	# c.execute("INSERT INTO requests VALUES('apple','comp')")
+	c.execute("INSERT INTO requests VALUES('dw','comp')")
+	c.execute("INSERT INTO requests VALUES('apple','banana')")
+	c.execute("INSERT INTO requests VALUES('apple','comp')")
 
 
 	#==========================================================

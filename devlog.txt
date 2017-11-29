@@ -1,4 +1,4 @@
-xuJ — 2017-11-17 14:04
+﻿xuJ — 2017-11-17 14:04
 	setup the repo with folders and files needed
 	setup the main setup python code for db and routing
 
@@ -48,5 +48,9 @@ korsunM - 2017-11-28 14:30
 
 xuJ - 2017-11-28 14:39
 	added in sample data in db.py
+
+korsunM - 2017-11-28 23:36
+	fixed database errors
+
 
 
