@@ -440,11 +440,15 @@ html {
 *::after {
   box-sizing: inherit; }
 
+flm {
+	color: white;
+}
+
 body {
   margin: 0;
-  padding: 0;
-  background: #fefefe;
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  padding: 100;
+  background: #769ccc;
+  font-family: "verdana", Helvetica, Roboto, Arial, sans-serif;
   font-weight: normal;
   line-height: 1.5;
   color: #0a0a0a;
@@ -460,7 +464,7 @@ img {
 
 textarea {
   height: auto;
-  min-height: 50px;
+  min-height: 100px;
   border-radius: 0; }
 
 select {
@@ -2225,7 +2229,7 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+  font-family: "courier", Helvetica, Roboto, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   color: inherit;
@@ -3327,7 +3331,7 @@ select {
   padding: 1rem;
   border: 1px solid rgba(10, 10, 10, 0.25);
   border-radius: 0;
-  background-color: white;
+  background-color: #ffffff;
   color: #0a0a0a; }
   .callout > :first-child {
     margin-top: 0; }
@@ -5133,7 +5137,8 @@ a.thumbnail {
       flex-wrap: wrap; }
   .top-bar,
   .top-bar ul {
-    background-color: #e6e6e6; }
+    background-color: #bcd9ff; }
+
   .top-bar input {
     max-width: 200px;
     margin-right: 1rem; }

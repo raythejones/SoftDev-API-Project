@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 
 {% block body %}
-<div>
+<div class="grid-x grid-padding-x">
+<div class="large-12 cell">
+<div class="callout">
+<h1> Welcome! </h1>
+<p>Find your friends and respond to friend requests!</p>
+
+<div class="grid-x grid-padding-x">
+<div class="large-6 medium-6 cell">
+<div class="callout">
+		<h3>Search for Friends</h3>
+
 	<form action="/friends">
 	Search: <input type="text" name="Name"><br>
-	<input type="submit" value="Submit">
+	<input type="submit" value="Submit" class="button">
 	</form>
-
+</div>
 	<br><br>
 
 	{% for each in stranger %}
@@ -18,17 +28,20 @@
 			<button name="person" type="submit" value="{{each}}">Send Friend Request</button><br>
 		</form>
 	{% endfor %}
-	<br><br><br>
-</div>
+	<br>
 
-<div>
-<h1> Friend Requests </h1>
+</div>
+<div class="large-6 medium-6 cell">
+<div class="callout">
+<h3> Friend Requests </h3>
+<p>Your Friend Requests are listed below:</p>
 {% for each in fr %}
 	<li>{{fr[each][0]}}({{each}})</li>
 	<form method="POST" action="/friends">
 	<button name="person" type="submit" value="{{each}}">Accept</button><br>
 	</form>
+	
 {% endfor %}
 </div>
-
+</div>
 {% endblock %}

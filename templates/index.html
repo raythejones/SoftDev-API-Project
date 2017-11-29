@@ -2,10 +2,18 @@
 
 {% block body %}
 
-	<div>
-		<h1>My Friends</h1>
+<div class="grid-x grid-padding-x">
+<div class="large-12 cell">
+<div class="callout">
+<h1> Welcome! </h1>
+<p>Check out your friends and find some products!</p>
+
+<div class="grid-x grid-padding-x">
+<div class="large-6 medium-6 cell">
+<div class="callout">
+		<h3>My Friends</h3>
 		{% if frands %}
-		    <p>No friends right now. Go make some!</p>
+		    <p>Your friends show up here! Go make some right now!</p>
 		{% else %}
 		<table>
 			{% for each in frands %}
@@ -26,10 +34,18 @@
 			{% endfor %}
 		</table>
 		{% endif %}
+</div>		
+		</div>
+<div class="large-6 medium-6 cell">
+		
+<div class="callout">
+		<h3>Products</h3>
+		
 		<form method="POST" action="/add">
-		  <button name="submit" type="submit" value="search">Click here Find Products! </button>
+		  <button name="submit" type="submit" value="search" class="button">Click here to find Products! </button>
 		</form>
-				
+</div>		
+			</div>	
 				
 	</div>
 	

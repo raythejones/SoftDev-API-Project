@@ -11,6 +11,8 @@
 	<div class="top-bar">
 	    <div class="top-bar-section">
 	    	<ul class="dropdown menu" data-dropdown-menu>
+	    						<li><a href="{{ url_for('index') }}">Home</a></li>
+
 	    		<li>
 					<a href="{{ url_for('friends') }}">Find Friends</a>
 					<ul class="menu">
@@ -20,7 +22,6 @@
 					</ul>
 				</li>
 				<li><a href="{{ url_for('profile') }}">My List</a></li>
-				<li><a href="{{ url_for('index') }}">Home</a></li>
 			</ul>
 		</div>
 	    <div class="top-bar-right">
@@ -31,12 +32,12 @@
 		</div>
 	</div>
     <ul>
+    <flm>
       {% set messages = get_flashed_messages() %}
       {% for message in messages %}
       <li>{{ message }}</li>
       {% endfor %}
-    </ul>
-    <hr>
+    </ul></flm>
 	{% block body %}
 
     {% endblock %}

@@ -2,10 +2,14 @@
 
 {% block body %}
 
-	<div>
+<div class="grid-x grid-padding-x">
+      <div class="large-12 cell">
+
+<div class="callout">
+
+
 		<h1>Update Profile </h1>
 		<form method="POST" action="/edit">
-			<div>
 				<label>FULL NAME:</label>
 					{{data[2]}} <br><br>
 				<label>USERNAME:</label>
@@ -16,19 +20,21 @@
 				<label>CONFIRM PASSWORD:
 					<input name="confirm" type="password">
 				</label><br>
-			</div>
-			<div>
+
 				<label>AGE:
 					<input name="age" type="text" value ="{{data[3]}}">
 				</label><br>
 				<label>GENDER:
 				  <select name="gender" id="gender" >
 					<option></option>
-				    <option value="female"{% if data[4]=="female" %}selected{% endif %}>female</option>
-				    <option value="male"{% if data[4]=="male" %}selected{% endif %}>male</option>
-				    <option value="other"{% if data[4]=="other" %}selected{% endif %}>other</option>
+				    <option value="female"{% if data[4]=="female" %}selected{% endif %}>Female</option>
+				    <option value="male"{% if data[4]=="male" %}selected{% endif %}>Male</option>
+				    <option value="other"{% if data[4]=="other" %}selected{% endif %}>Other</option>
 				  </select>
 				</label><br>
+				
+				
+
 				<label>HOBBIES/INTERESTS:
 				<textarea name="hobbies">
 				{% if data[5] %}
@@ -38,8 +44,8 @@
 				{% endif %}
 				</textarea>
 				</label><br>
-				<input type="submit" value="Submit"> <br><br>
-			</div>
-		</form>
+				<input type="submit" value="Submit" class="button"> <br><br>
+		</form>			</div>
+
 	</div>
 {% endblock %}
