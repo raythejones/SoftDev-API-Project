@@ -117,6 +117,10 @@ def login():
 def logout():
     auth.logout()
     flash("You have been logged out")
+    friends = {}
+    requests = {}
+    my_username = ""
+    my_data = []
     return redirect( url_for("index"))
 
 
@@ -124,9 +128,7 @@ def logout():
 def edit():
     initialize_fnfr()
     if request.method == 'POST':
-        if request.form['password']==request.form['confirm']:
-            name = request.form['name']
-            my_username = request.form['username']
+        if request.form['password']==request.form['confirm'] or request.form['password']=="" and request.form['confirm']=="":
             pw = request.form['password']
             age = request.form['age']
             gender = request.form['gender']
