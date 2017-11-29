@@ -13,3 +13,8 @@ python utils/db.py
 python presents.py
 
 Dependencies:
+
+The file called "keys.csv" must be in the "data" directory.
+The user must in stall "requests". (pip install reqests)
+
+
