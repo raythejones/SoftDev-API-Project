@@ -49,11 +49,20 @@ korsunM - 2017-11-28 14:30
 xuJ - 2017-11-28 14:39
 	added in sample data in db.py
 
+jonesR - 2017-11-28 14:50
+	finally got login to work well with db.py
+
 korsunM - 2017-11-28 23:36
 	fixed database errors
 	addwish.html now works
 
+jonesR - 2017-11-29 01:30
+	added flashes for login and logout
+
 xuJ - 2017-11-29 03:15
 	small bugs
 	fixed /edit route so that it would display the current data and updated data
+
+jonesR - 2017-11-29 05:11
+	added Foundation elements
 
