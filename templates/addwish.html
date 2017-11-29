@@ -5,7 +5,7 @@
   <input type="text" name="lookup" >
   <input type="submit" value="Submit">
 </form>
-
+{% if query is defined %}
 <table>
   <tr>
     <th> {{query}} </th>
@@ -17,6 +17,8 @@
   
   {% endfor %}
 </table>
+
+{% endif %}
 
 {% endblock %}
 
