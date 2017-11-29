@@ -116,6 +116,10 @@ def logout():
     if 'username' in session:
         session.pop('username');
     flash("You have been logged out")
+    friends = {}
+    requests = {}
+    my_username = ""
+    my_data = []
     return redirect( url_for("index"))
 
 
@@ -125,7 +129,7 @@ def edit():
     if 'username' in session:
         #initialize_fnfr()
         if request.method == 'POST':
-            if request.form['password']==request.form['confirm']:
+            if request.form['password']==request.form['confirm'] or request.form['password']=="" and request.form['confirm']=="":
                 name = request.form['name']
                 my_username = request.form['username']
                 pw = request.form['password']
@@ -137,6 +141,15 @@ def edit():
             else:
                 flash('Passwords do not match.')
                 return redirect(url_for('edit'))
+    initialize_fnfr()
+    if request.method == 'POST':
+        if request.form['password']==request.form['confirm'] or request.form['password']=="" and request.form['confirm']=="":
+            pw = request.form['password']
+            age = request.form['age']
+            gender = request.form['gender']
+            hobbies = request.form['hobbies']
+            c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\");"%(my_username, pw, name, age, gender, hobbies))
+            return redirect(url_for('edit'))
         else:
             my_data = c.execute("SELECT user FROM users WHERE user = %s"%(my_username))
             return render_template('edit.html', data=my_data, fr=requests)
