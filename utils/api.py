@@ -23,7 +23,7 @@ def productInfo(dict):
     info['name'] = dict['name']
     info['image']= dict['largeImage']
     info['link'] = dict['productUrl']
-    info['desc']= dict['shortDescription']
+    info['desc']= dict['longDescription']
     return info
     
 
