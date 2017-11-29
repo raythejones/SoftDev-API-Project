@@ -1,7 +1,14 @@
-{% extends "base.html" %}
-
-{% block body %}
-  <br><br><br>
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='foundation.css')}}">
+	<link rel= "stylesheet" type= "text/css" href= "{{url_for('static',filename='app.css')}}">
+	<title>{% block title %} {% endblock %}</title>
+</head>
+<body>
+  <br><br>
+  <center><h1>Presenting the Presence of Presents in the Present</h1></center>
+  <br><br>
 <div class="grid-x grid-padding-x">
       <div class="large-6 cell">
 	<h3 align="center">LOGIN</h3><hr>
@@ -25,6 +32,9 @@
 	<label>USERNAME:
 	  <input name="usr" type="text">
 	</label>
+	<label>FULL NAME:
+	  <input name="name" type="text">
+	</label>
 	<label>PASSWORD:
 	  <input name="pwd" type="PASSWORD">
 	</label> <br>
@@ -35,6 +45,7 @@
 	  <input type="submit" class="button alert" name="type" value="Signup">
 	</div>
       </form>
-</div></div>
-          
-{% endblock %}
+</div></div>      
+
+</body>
+</html>

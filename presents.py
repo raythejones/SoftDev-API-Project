@@ -33,6 +33,7 @@ strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
 def initialize_fnfr():
     people = c.execute("SELECT friend FROM friends WHERE username == %s" % (session['username']))
+    print(people)
     for each in people:
         friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = %s"%(each[0]))
         friend_wishes = []
@@ -66,7 +67,6 @@ def initialize_fnfr():
 @my_app.route('/')
 def index():
 	if 'username' in session:
-            #initialize_fnfr()
 	    return render_template('index.html', data=my_data, fr=requests, frands=friends,)
 	else:
        	    return redirect(url_for('login'))
@@ -83,7 +83,11 @@ def login():
             # successful login
             if log_res == 0:
                 session['username']= request.form['usr']
+                name = request.form['name']
+                pw = request.form['pwd']
                 flash("You have logged in successfully!")
+                c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(session['username'], pw, name))
+                initialize_fnfr()
                 return redirect( url_for('index') )
             # bad password
             if log_res == 1:
@@ -126,7 +130,6 @@ def logout():
 @my_app.route('/edit')
 def edit():
     if 'username' in session:
-        #initialize_fnfr()
         if request.method == 'POST':
             if request.form['password']==request.form['confirm']:
                 pw = request.form['password']
@@ -147,36 +150,34 @@ def edit():
 @my_app.route('/friends')
 def friends():
     if 'username' in session:
-        #initialize_fnfr()
-	if request.method == "POST":
-		#if statement for when user presses "accept" or "request" button on friends page
-		if request.form['person']:
-			person = request.form['person']
-			#requests and friends datatables get updated
-			if person in strangers:
-				c.execute("INSERT INTO requests VALUES(\"%s\", \"%s\");"%(person, my_username))
-			if person in friends:
-				c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(my_username, person))
-				c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(person, my_username))
-			return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
+	    if request.method == "POST":
+	    	#if statement for when user presses "accept" or "request" button on friends page
+	    	if request.form['person']:
+	    		person = request.form['person']
+	    		#requests and friends datatables get updated
+	    		if person in strangers:
+	    			c.execute("INSERT INTO requests VALUES(\"%s\", \"%s\");"%(person, my_username))
+	    		elif person in friends:
+	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(my_username, person))
+	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(person, my_username))
+	    		return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
 		#if statement for when user presses "search" button on friends page
-		if request.form['name']:
-			searched = {}
-			for each in strangers:
-				if name in each or name in each[0]:
-					searched_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user %s"%(each))
-					searched[each[0]] = searched_data
-			return render_template('findfriends.html', data=my_data, fr=requests, stranger=searched)
-	#when friends page is accessed from index
-        else:
-       	    return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
+	    	if request.form['name']:
+	    		searched = {}
+	    		for each in strangers:
+	    			if name in each or name in each[0]:
+	    				searched_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user %s"%(each))
+	    				searched[each[0]] = searched_data
+	    		return render_template('findfriends.html', data=my_data, fr=requests, stranger=searched)
+	    #when friends page is accessed from index
+            else:
+           	    return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
     else:
         return redirect(url_for('index'))
     
 @my_app.route('/profile')
 def profile():
     if 'username' in session:
-        #initialize_fnfr()
         if request.method == "POST":
 	    person = request.form['person']
 	    #new_data is the personal information of whoever you're looking at (that isn't you)
@@ -201,7 +202,6 @@ def profile():
 @my_app.route('/add', methods =['GET','POST'])
 def add():
     if 'username' in session:
-        #initialize_fnfr()
         if request.args.get('search') == 'Submit':
             items =searchWalmart(request.args.get('lookup'))
             return render_template('addwish.html', stuff=items, data=my_data, fr=requests)
@@ -215,7 +215,6 @@ def add():
 @my_app.route('/product', methods=['GET','POST'])
 def product():
     if 'username' in session:
-        #initialize_fnfr()
         if request.method == 'GET':
             name=request.args.get('name')
             info={}

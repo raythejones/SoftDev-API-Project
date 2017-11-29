@@ -16,17 +16,17 @@ def make_database():
 	c.execute("CREATE TABLE requests (username TEXT , request TEXT );")
 	c.execute("CREATE TABLE products (username INT , name TEXT, id TEXT);")
 
-	pw1 = hashlib.md5('pass').hexdigest()
-	pw2 = hashlib.md5('mmomi').hexdigest()
-	pw3 = hashlib.md5('linux').hexdigest() 
-	pw4 = hashlib.md5('pen').hexdigest()
-	pw5 = hashlib.md5('crazy').hexdigest()
+	pw1 = hashlib.sha224( "pass" ).hexdigest()
+	pw2 = hashlib.sha224( "mmomi" ).hexdigest()
+	pw3 = hashlib.sha224( "linux" ).hexdigest()
+	pw4 = hashlib.sha224( "pen" ).hexdigest()
+	pw5 = hashlib.sha224( "crazy" ).hexdigest()
 
-	db.execute("INSERT INTO users VALUES('dw',\"%s\",'DW',\"\",\"\",\"\");"%(pw1))
-	db.execute("INSERT INTO users VALUES('ppapi',\"%s\",'PPAPi','17','other','coding, volleyball, dancing, eating, snowboarding');"%(pw2))
-	db.execute("INSERT INTO users VALUES('comp',\"%s\",'PC','35','male','run, cool down, shine bright like a diamond');"%(pw3))
-	db.execute("INSERT INTO users VALUES('apple',\"%s\",'Apple','10','female','read books, rot, fall');"%(pw4))
-	db.execute("INSERT INTO users VALUES('banana',\"%s\",'Banana',\"\",\"\",\"\");"%(pw5))
+	c.execute("INSERT INTO users VALUES('dw',\"%s\",'DW',\"\",\"\",\"\");"%(pw1))
+	c.execute("INSERT INTO users VALUES('ppapi',\"%s\",'PPAPi','17','other','coding, volleyball, dancing, eating, snowboarding');"%(pw2))
+	c.execute("INSERT INTO users VALUES('comp',\"%s\",'PC','35','male','run, cool down, shine bright like a diamond');"%(pw3))
+	c.execute("INSERT INTO users VALUES('apple',\"%s\",'Apple','10','female','read books, rot, fall');"%(pw4))
+	c.execute("INSERT INTO users VALUES('banana',\"%s\",'Banana',\"\",\"\",\"\");"%(pw5))
 
 
 	c.execute("INSERT INTO friends VALUES('dw','ppapi')")
