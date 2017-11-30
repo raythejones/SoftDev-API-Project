@@ -14,7 +14,7 @@
 	    						<li><a href="{{ url_for('index') }}">Home</a></li>
 
 	    		<li>
-					<a href="{{ url_for('friends') }}">Find Friends</a>
+					<a href="{{ url_for('findfriends') }}">Find Friends</a>
 					<ul class="menu">
 						{% for each in fr %}
 							<li>{{fr[each][0]}}({{each}})</li>

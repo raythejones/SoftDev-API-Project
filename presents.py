@@ -24,7 +24,7 @@ db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise c
 c = db.cursor()    #facilitate db ops
 
 my_data = []; #array in the form [user, pass, name, age, gender, hobbies]
-friends_info = {}; #dictionary in the form (username: [name, age, gender, hobbies, [wishes]])
+friends = {}; #dictionary in the form (username: [name, age, gender, hobbies, [wishes]])
 requests = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
@@ -39,6 +39,13 @@ def print_list(l):
         ans += ", "
     print ans
     
+def print_dictkeys(l):
+    ans = ""
+    for each in l:
+        ans += each
+        ans += ", "
+    print ans
+    
     
 def initialize_fnfr():
                 
@@ -49,6 +56,7 @@ def initialize_fnfr():
         temp.append(each[0])
     for each in temp:
         friend_info = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each))
+        friend_data = []
         for section in friend_info:
             for field in section:
                 friend_data.append(field)
@@ -57,9 +65,9 @@ def initialize_fnfr():
         for wish in temp:
             friend_wishes.append(wish[0])
         friend_data.append(friend_wishes)
-        print("\""+each+"\"")
         print_list(friend_data)
-        friends_info[each] = friend_data
+        friends[each] = friend_data
+        
         
     reqs = c.execute("SELECT request FROM requests WHERE username == \"%s\";"%(session['username']))
     for each in reqs:
@@ -179,7 +187,7 @@ def edit():
         return redirect(url_for('index'))
     
 @my_app.route('/friends')
-def friends():
+def findfriends():
     if 'username' in session:
 	    if request.method == "POST":
 	    	#if statement for when user presses "accept" or "request" button on friends page

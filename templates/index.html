@@ -13,26 +13,26 @@
 <div class="callout">
 		<h3>My Friends</h3>
 		{% if frands %}
-		    <p>Your friends show up here! Go make some right now!</p>
+			<table>
+				{% for each in frands %}
+					<tr>
+						<td>
+						{{frands[each][0]}} ({{each}}) <br>
+						{% for wish in frands[each][4] %}
+							{{wish}},
+						{% endfor %}
+						...
+						</td>
+						<td>
+							<form method="POST" action="/profile">
+							  <button name="person" type="submit" value="{{each}}">See Wish List</button>
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</table>
 		{% else %}
-		<table>
-			{% for each in frands %}
-				<tr>
-					<td>
-					{{frands[each][0]}}({{each}}) <br>
-					{% for wish in frands[each][1] %}
-						{{wish}},
-					{% endfor %}
-					...
-					</td>
-					<td>
-						<form method="POST" action="/profile">
-						  <button name="person" type="submit" value="{{each}}">See Wish List</button>
-						</form>
-					</td>
-				</tr>
-			{% endfor %}
-		</table>
+			<p>Your friends show up here! Go make some right now!</p>
 		{% endif %}
 </div>		
 		</div>

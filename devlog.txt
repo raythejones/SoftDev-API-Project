@@ -66,3 +66,6 @@ xuJ - 2017-11-29 03:15
 jonesR - 2017-11-29 05:11
 	added Foundation elements
 
+xuJ - 2017-11-30 00:57
+	lots of data structure changes to debug initialize_fnfr()
+	now index.html is fully functional
