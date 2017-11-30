@@ -118,7 +118,7 @@ def login():
                 flash("You have logged in successfully!")
                 #c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(session['username'], pw, session['username']))
                 initialize_fnfr()
-                return redirect( url_for('index') )
+                return redirect( url_for('edit') )
             # bad password
             if log_res == 1:
                 flash("Incorrect password")

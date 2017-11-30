@@ -26,13 +26,15 @@
 			</ul>
 		</div>
 	</div>
-    <ul>
-    <flm>
+     <center>
+     <flm2>
       {% set messages = get_flashed_messages() %}
       {% for message in messages %}
-      <li>{{ message }}</li>
+{{ message }}
       {% endfor %}
-    </ul></flm>
+</flm2>
+    </center>
+    
 	{% block body %}
 
     {% endblock %}

@@ -443,6 +443,9 @@ html {
 flm {
 	color: white;
 }
+flm2 {
+	color: red;
+}
 
 body {
   margin: 0;
@@ -2233,7 +2236,8 @@ h6, .h6 {
   font-style: normal;
   font-weight: normal;
   color: inherit;
-  text-rendering: optimizeLegibility; }
+  text-rendering: optimizeLegibi
+  ty; }
   h1 small, .h1 small,
   h2 small, .h2 small,
   h3 small, .h3 small,
