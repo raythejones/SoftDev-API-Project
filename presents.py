@@ -214,10 +214,10 @@ def findfriends():
 	    		person = request.form['person']
 	    		#requests and friends datatables get updated
 	    		if person in strangers:
-	    			c.execute("INSERT INTO requests VALUES(\"%s\", \"%s\");"%(person, my_username))
+	    			c.execute("INSERT INTO requests VALUES(\"%s\", \"%s\");"%(person, session["username"]))
 	    		elif person in friends:
-	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(my_username, person))
-	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(person, my_username))
+	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(session["username"], person))
+	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(person, session["username"]))
 	    		return render_template('findfriends.html', data=my_data, fr=requests, stranger={})
 		#if statement for when user presses "search" button on friends page
 	    	if request.form['name']:
@@ -237,23 +237,23 @@ def findfriends():
 def profile():
     if 'username' in session:
         if request.method == "POST":
-	    person = request.form['person']
-	    #new_data is the personal information of whoever you're looking at (that isn't you)
-	    new_data = []
-	    new_data = c.execute("SELECT user FROM users WHERE username = \"%s\";"%(person))
-	    #making a products dictionary to use in the html
-	    products = []
-	    for each in reqs:
-		product_data = c.execute("SELECT name,id FROM users WHERE username = \"%s\";"%(person))
-		products[each[0]] = product_data
-	    return render_template('profile.html', data=new_data, fr=requests, product=products)
+            person = request.form['person']
+	        #new_data is the personal information of whoever you're looking at (that isn't you)
+            new_data = []
+            new_data = c.execute("SELECT * FROM users WHERE username = \"%s\";"%(person))
+	        #making a products dictionary to use in the html
+            products = []
+            product_data = c.execute("SELECT name FROM products WHERE username = \"%s\";"%(person))
+            for each in product_data:
+                products.extend(product_data)
+            return render_template('profile.html', data=new_data, fr=requests, product=products)
         else:
        	    #making a products dictionary to use in the html
-       	    products = []
-       	    for each in reqs:
-		product_data = c.execute("SELECT name,id FROM users WHERE username = \"%s\";"%(my_username))
-		products[each[0]] = product_data
-	    return render_template('profile.html', data=my_data, fr=requests, product=products)
+            products = []
+            product_data = c.execute("SELECT name FROM products WHERE username = \"%s\";"%(session["username"]))
+            for each in product_data:
+                products.extend(product_data)
+            return render_template('profile.html', data=my_data, fr=requests, product=products)
     else:
         return redirect(url_for('index'))
     
