@@ -12,8 +12,8 @@
 <div class="callout">
 		<h3>Search for Friends</h3>
 
-	<form action="/friends">
-	Search: <input type="text" name="Name"><br>
+	<form method="POST" action="/friends">
+	Search: <input type="text" name="name"><br>
 	<input type="submit" value="Submit" class="button">
 	</form>
 </div>
@@ -35,13 +35,20 @@
 <div class="callout">
 <h3> Friend Requests </h3>
 <p>Your Friend Requests are listed below:</p>
-{% for each in fr %}
-	<li>{{fr[each][0]}}({{each}})</li>
-	<form method="POST" action="/friends">
-	<button name="person" type="submit" value="{{each}}">Accept</button><br>
-	</form>
-	
-{% endfor %}
+<table>
+	{% for each in fr %}
+		<tr>
+			<td>
+			{{fr[each][0]}} ({{each}})
+			</td>
+			<td>
+				<form method="POST" action="/friends">
+				<button name="person" type="submit" value="{{each}}">Accept</button><br>
+				</form>
+			</td>
+		</tr>
+	{% endfor %}
+</table>
 </div>
 </div>
 {% endblock %}

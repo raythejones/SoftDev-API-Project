@@ -48,7 +48,6 @@ def print_dictkeys(l):
     
     
 def initialize_fnfr():
-                
     people = c.execute("SELECT friend FROM friends WHERE username == \"%s\";" % (session['username']))
     temp = []
     friend_data = []
@@ -65,29 +64,35 @@ def initialize_fnfr():
         for wish in temp:
             friend_wishes.append(wish[0])
         friend_data.append(friend_wishes)
-        print_list(friend_data)
         friends[each] = friend_data
         
         
     reqs = c.execute("SELECT request FROM requests WHERE username == \"%s\";"%(session['username']))
     for each in reqs:
-        req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
+        req_info = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
+        req_data = []
+        for section in req_info:
+            for field in section:
+                req_data.append(field)
         requests[each[0]] = req_data
-        
-	#this is the same thing except we're making a dictionary for non-friends now
-	stranger = c.execute("SELECT user FROM users WHERE username != \"%s\";"%(session['username']))
-	for each in stranger:
-		#we add every user who is not the actual user in session
-		strange_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
-		strangers[each[0]] = strange_data
-		#we remove usernames of friends
-		for each2 in friends: 
-			if each == each2:
-				strangers.pop(each)
-		#we remove usernames of strangers who we have friend requested
-		for each3 in requests:
-			if each == each3:
-				strangers.pop(each)
+    
+    #this is the same thing except we're making a dictionary for non-friends now
+    stranger = c.execute("SELECT username FROM users WHERE username != \"%s\";"%(session['username']))
+    for each in stranger:
+        if each[0] in friends or each[0] in requests:
+            blank = ""
+        else:
+            #we add every user who is not the actual user in session
+            strange_info = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
+            strange_data = []
+            for section in strange_info:
+                for field in section:
+                    strange_data.append(field)
+                    strangers[each[0]] = strange_data
+                
+    print_dictkeys(friends)
+    print_dictkeys(requests)
+    print_dictkeys(strangers)
       
 @my_app.route('/')
 def index():
@@ -151,6 +156,7 @@ def logout():
     flash("You have been logged out")
     friends = {}
     requests = {}
+    strangers = {}
     my_username = ""
     my_data = []
     return redirect( url_for("index"))
@@ -185,7 +191,20 @@ def edit():
             return render_template('edit.html', data=my_data, fr=requests)
     else:
         return redirect(url_for('index'))
-    
+        
+'''person_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
+requests[person] = person_data'''
+'''person_info = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each))
+for section in person_info:
+            for field in section:
+                person_data.append(field)
+        person_wishes = []
+        temp = c.execute("SELECT name FROM products WHERE username = \"%s\";"%(each))
+        for wish in temp:
+            person_wishes.append(wish[0])
+        person_data.append(friend_wishes)
+        friends[person] = person_data'''
+        
 @my_app.route('/friends')
 def findfriends():
     if 'username' in session:
@@ -199,18 +218,18 @@ def findfriends():
 	    		elif person in friends:
 	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(my_username, person))
 	    			c.execute("INSERT INTO friends VALUES(\"%s\", \"%s\");"%(person, my_username))
-	    		return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
+	    		return render_template('findfriends.html', data=my_data, fr=requests, stranger={})
 		#if statement for when user presses "search" button on friends page
 	    	if request.form['name']:
 	    		searched = {}
 	    		for each in strangers:
 	    			if name in each or name in each[0]:
-	    				searched_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE user %s"%(each))
+	    				searched_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each))
 	    				searched[each[0]] = searched_data
 	    		return render_template('findfriends.html', data=my_data, fr=requests, stranger=searched)
 	    #when friends page is accessed from index
             else:
-           	    return render_template('findfriends.html', data=my_data, fr=requests, stranger=strangers)
+           	    return render_template('findfriends.html', data=my_data, fr=requests, stranger={})
     else:
         return redirect(url_for('index'))
     
@@ -221,18 +240,18 @@ def profile():
 	    person = request.form['person']
 	    #new_data is the personal information of whoever you're looking at (that isn't you)
 	    new_data = []
-	    new_data = c.execute("SELECT user FROM users WHERE user = %s"%(person))
+	    new_data = c.execute("SELECT user FROM users WHERE username = \"%s\";"%(person))
 	    #making a products dictionary to use in the html
 	    products = []
 	    for each in reqs:
-		product_data = c.execute("SELECT name,id FROM users WHERE user = %s"%(person))
+		product_data = c.execute("SELECT name,id FROM users WHERE username = \"%s\";"%(person))
 		products[each[0]] = product_data
 	    return render_template('profile.html', data=new_data, fr=requests, product=products)
         else:
        	    #making a products dictionary to use in the html
        	    products = []
        	    for each in reqs:
-		product_data = c.execute("SELECT name,id FROM users WHERE user = %s"%(my_username))
+		product_data = c.execute("SELECT name,id FROM users WHERE username = \"%s\";"%(my_username))
 		products[each[0]] = product_data
 	    return render_template('profile.html', data=my_data, fr=requests, product=products)
     else:
