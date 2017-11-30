@@ -118,7 +118,7 @@ def login():
                 flash("You have logged in successfully!")
                 #c.execute("INSERT INTO users VALUES (\"%s\", \"%s\", \"%s\", \"\", \"\", \"\");"%(session['username'], pw, session['username']))
                 initialize_fnfr()
-                return redirect( url_for('edit') )
+                return redirect( url_for('index') )
             # bad password
             if log_res == 1:
                 flash("Incorrect password")
@@ -135,13 +135,13 @@ def login():
             if cr_acc_res == 0:
                 flash("Account created")
                 return redirect( url_for('edit') )
-            # if username already exists
+            # if match passwords
             if cr_acc_res == 1:
-                flash("That username already exists")
-                return redirect( url_for('login') )
-		# match passwords
-            if cr_acc_res == 2:
                 flash("Passwords don't match")
+                return redirect( url_for('login') )
+		# username exists
+            if cr_acc_res == 2:
+                flash("That username already exists")
                 return redirect( url_for('login') )
 
     # just render normally if no post
