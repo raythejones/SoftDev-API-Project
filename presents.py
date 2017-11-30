@@ -47,15 +47,22 @@ def initialize_fnfr():
             go1 = 1
     if go1 == 1:
         people = c.execute("SELECT friend FROM friends WHERE username == \"%s\";" % (session['username']))
-        print(people)
+        temp_list = []
+        friend_data = []
+        friend_wishes = []
         for each in people:
-            friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
-            friend_wishes = []
-            temp = c.execute("SELECT name FROM products WHERE username == \"%s\";"%(each[0]))
+            temp_list.append(each[0])
+        for each in temp_list:
+            friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each))
+            print_list(friend_data)
+        for each in temp_list:
+            temp = c.execute("SELECT name FROM products WHERE username == \"%s\";"%(each))
+            print_list(temp)
             for wish in temp:
-                friend_wishes.append(wish[0])
-            friend_data.append(friend_wishes)
-            friends[each[0]] = friend_data
+                print each + ": " + wish[0]
+                #friend_wishes.append(wish[0])
+            #friend_data.append(friend_wishes)
+            #friends[each[0]] = friend_data
 
     go2 = 0
     for each in c.execute("SELECT username FROM requests;"):
