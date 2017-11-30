@@ -69,3 +69,7 @@ jonesR - 2017-11-29 05:11
 xuJ - 2017-11-30 00:57
 	lots of data structure changes to debug initialize_fnfr()
 	now index.html is fully functional
+
+xuJ - 2017-11-30 02:38
+	tried to fix the bugs in Philip’s part for him (findfriends and profile) but this is too much for one person :(
+	just got friend requests to display, but can’t friend people and profile not working
