@@ -24,7 +24,7 @@ db = sqlite3.connect(f, check_same_thread=False)  #open if f exists, otherwise c
 c = db.cursor()    #facilitate db ops
 
 my_data = []; #array in the form [user, pass, name, age, gender, hobbies]
-friends = {}; #dictionary in the form (username: [name, age, gender, hobbies, [wishes]])
+friends_info = {}; #dictionary in the form (username: [name, age, gender, hobbies, [wishes]])
 requests = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 strangers = {}; #dictionary in the form (username: [name, age, gender, hobbies])
 
@@ -41,36 +41,31 @@ def print_list(l):
     
     
 def initialize_fnfr():
-    go1 = 0
-    for each in c.execute("SELECT username FROM friends"):
-        if each[0] == session['username']:
-            go1 = 1
-    if go1 == 1:
-        people = c.execute("SELECT friend FROM friends WHERE username == \"%s\";" % (session['username']))
-        temp = []
-        for each in people:
-            temp.append(each[0])
-        for each in temp:
-            friend_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each))
-            print_list(friend_data)
-            friend_wishes = []
-            temp = c.execute("SELECT  name FROM products WHERE username == \"%s\";"%(each))
-            for wish in temp:
-                print each[0] + ": " + wish[0]
-                #friend_wishes.append(wish[0])
-            #friend_data.append(friend_wishes)
-            #friends[each[0]] = friend_data
-
-    go2 = 0
-    for each in c.execute("SELECT username FROM requests;"):
-        if each[0] == session['username']:
-            go2 = 1
-    if go2 == 1:
-        reqs = c.execute("SELECT request FROM requests WHERE username == \"%s\";"%(session['username']))
-        for each in reqs:
-            req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
-            requests[each[0]] = req_data
-
+                
+    people = c.execute("SELECT friend FROM friends WHERE username == \"%s\";" % (session['username']))
+    temp = []
+    friend_data = []
+    for each in people:
+        temp.append(each[0])
+    for each in temp:
+        friend_info = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each))
+        for section in friend_info:
+            for field in section:
+                friend_data.append(field)
+        friend_wishes = []
+        temp = c.execute("SELECT name FROM products WHERE username == \"%s\";"%(each))
+        for wish in temp:
+            friend_wishes.append(wish[0])
+        friend_data.append(friend_wishes)
+        print("\""+each+"\"")
+        print_list(friend_data)
+        friends_info[each] = friend_data
+        
+    reqs = c.execute("SELECT request FROM requests WHERE username == \"%s\";"%(session['username']))
+    for each in reqs:
+        req_data = c.execute("SELECT name,age,gender,hobbies FROM users WHERE username = \"%s\";"%(each[0]))
+        requests[each[0]] = req_data
+        
 	#this is the same thing except we're making a dictionary for non-friends now
 	stranger = c.execute("SELECT user FROM users WHERE username != \"%s\";"%(session['username']))
 	for each in stranger:
@@ -85,7 +80,6 @@ def initialize_fnfr():
 		for each3 in requests:
 			if each == each3:
 				strangers.pop(each)
-    
       
 @my_app.route('/')
 def index():

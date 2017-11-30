@@ -44,6 +44,7 @@ def make_database():
 	c.execute("INSERT INTO requests VALUES('apple','comp');")
 
         c.execute("INSERT INTO products VALUES('dw','Nintendo Switch Console Gray Joy-Con');")
+        c.execute("INSERT INTO products VALUES('apple','Nintendo Switch Console Gray Joy-Con');")
         #c.execute("INSERT INTO products VALUES('dw','LEGO Disney Princess Belle\'s Enchanted Castle');")
         #41067
 
